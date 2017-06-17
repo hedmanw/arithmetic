@@ -5,11 +5,12 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ExpressionBuilder extends ArithmeticBaseListener {
-    private final HashMap<ArithmeticParser.NumberContext, Literal> literals = new HashMap<>();
-    private final HashMap<ArithmeticParser.TermContext, Term> terms = new HashMap<>();
-    private final HashMap<ArithmeticParser.ExpressionContext, Expression> expressions = new HashMap<>();
+    private final Map<ArithmeticParser.NumberContext, Literal> literals = new HashMap<>();
+    private final Map<ArithmeticParser.TermContext, Term> terms = new HashMap<>();
+    private final Map<ArithmeticParser.ExpressionContext, Expression> expressions = new HashMap<>();
     private Expression resultExpression;
 
     @Override

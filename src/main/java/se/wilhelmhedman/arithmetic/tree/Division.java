@@ -7,6 +7,6 @@ public class Division extends Term {
 
     @Override
     public String toString() {
-        return getLeft().toString() + "/" + getRight().toString();
+        return getLeft().toString() + "/[" + getRight() + "]";
     }
 }

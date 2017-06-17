@@ -7,6 +7,6 @@ public class Subtraction extends Expression {
 
     @Override
     public String toString() {
-        return getLeft() + "-" + getRight();
+        return getLeft() + "-[" + getRight() + "]";
     }
 }

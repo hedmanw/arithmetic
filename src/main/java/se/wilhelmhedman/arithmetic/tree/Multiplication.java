@@ -7,6 +7,6 @@ public class Multiplication extends Term {
 
     @Override
     public String toString() {
-        return getLeft().toString() + "x" + getRight().toString();
+        return getLeft().toString() + "*[" + getRight() + "]";
     }
 }

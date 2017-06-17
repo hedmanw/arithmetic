@@ -7,9 +7,14 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticLexer;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
-public class Runner {
-    public static void main(String[] args) {
-        String input = "1+2+3";
+public class ExpressionRunner {
+    private final String input;
+
+    public ExpressionRunner(String input) {
+        this.input = input;
+    }
+
+    public Expression getRoot() {
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         ArithmeticLexer lexer = new ArithmeticLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -20,5 +25,7 @@ public class Runner {
 
         Expression exp = listener.getResult();
         System.out.println(exp.toString());
+
+        return exp;
     }
 }
