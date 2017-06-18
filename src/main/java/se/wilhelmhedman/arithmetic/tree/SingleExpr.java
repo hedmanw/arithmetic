@@ -9,4 +9,9 @@ public class SingleExpr extends Expression {
     public String toString() {
         return getLeft().toString();
     }
+
+    @Override
+    public double evaluate() {
+        return getLeft().evaluate();
+    }
 }

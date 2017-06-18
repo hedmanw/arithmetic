@@ -11,4 +11,9 @@ public class SingleAtom extends Atom {
     public String toString() {
         return literal.toString();
     }
+
+    @Override
+    public double evaluate() {
+        return literal.evaluate();
+    }
 }

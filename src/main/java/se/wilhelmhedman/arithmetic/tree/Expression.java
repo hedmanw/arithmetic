@@ -1,6 +1,6 @@
 package se.wilhelmhedman.arithmetic.tree;
 
-public abstract class Expression {
+public abstract class Expression implements Evaluatable {
     private final Term left;
     private final Expression right;
 

@@ -9,4 +9,9 @@ public class SingleTerm extends Term {
     public String toString() {
         return getLeft().toString();
     }
+
+    @Override
+    public double evaluate() {
+        return getLeft().evaluate();
+    }
 }

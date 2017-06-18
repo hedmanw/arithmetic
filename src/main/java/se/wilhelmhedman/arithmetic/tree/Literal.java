@@ -1,18 +1,19 @@
 package se.wilhelmhedman.arithmetic.tree;
 
-public class Literal {
+public class Literal implements Evaluatable {
     private final double value;
 
     public Literal(double d) {
         this.value = d;
     }
 
-    public double getValue() {
-        return value;
-    }
-
     @Override
     public String toString() {
         return Double.toString(value);
+    }
+
+    @Override
+    public double evaluate() {
+        return value;
     }
 }

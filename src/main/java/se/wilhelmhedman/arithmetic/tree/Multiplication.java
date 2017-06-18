@@ -9,4 +9,9 @@ public class Multiplication extends Term {
     public String toString() {
         return getLeft().toString() + "*[" + getRight() + "]";
     }
+
+    @Override
+    public double evaluate() {
+        return getLeft().evaluate() * getRight().evaluate();
+    }
 }

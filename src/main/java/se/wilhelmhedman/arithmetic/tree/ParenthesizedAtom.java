@@ -11,4 +11,9 @@ public class ParenthesizedAtom extends Atom {
     public String toString() {
         return "(" + expression.toString() + ")";
     }
+
+    @Override
+    public double evaluate() {
+        return expression.evaluate();
+    }
 }

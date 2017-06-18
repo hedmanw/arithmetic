@@ -9,4 +9,9 @@ public class Subtraction extends Expression {
     public String toString() {
         return getLeft() + "-[" + getRight() + "]";
     }
+
+    @Override
+    public double evaluate() {
+        return getLeft().evaluate() - getRight().evaluate();
+    }
 }

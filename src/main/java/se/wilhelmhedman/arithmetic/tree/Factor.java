@@ -1,6 +1,6 @@
 package se.wilhelmhedman.arithmetic.tree;
 
-public class Factor {
+public class Factor implements Evaluatable {
     private final Atom atom;
     private final Factor factor;
 
@@ -21,6 +21,16 @@ public class Factor {
         }
         else {
             return atom.toString() + "^[" + factor.toString() + ']';
+        }
+    }
+
+    @Override
+    public double evaluate() {
+        if (factor == null) {
+            return atom.evaluate();
+        }
+        else {
+            return Math.pow(atom.evaluate(), factor.evaluate());
         }
     }
 }
