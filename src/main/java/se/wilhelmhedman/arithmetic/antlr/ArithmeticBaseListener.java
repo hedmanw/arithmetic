@@ -30,18 +30,6 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTwoExpression(ArithmeticParser.TwoExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTwoExpression(ArithmeticParser.TwoExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterSingleExpression(ArithmeticParser.SingleExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -54,13 +42,13 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTwoTerm(ArithmeticParser.TwoTermContext ctx) { }
+	@Override public void enterTwoExpression(ArithmeticParser.TwoExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTwoTerm(ArithmeticParser.TwoTermContext ctx) { }
+	@Override public void exitTwoExpression(ArithmeticParser.TwoExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -73,6 +61,18 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSingleTerm(ArithmeticParser.SingleTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTwoTerm(ArithmeticParser.TwoTermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTwoTerm(ArithmeticParser.TwoTermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

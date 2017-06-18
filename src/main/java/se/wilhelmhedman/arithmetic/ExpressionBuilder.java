@@ -31,10 +31,10 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     public void exitTwoExpression(ArithmeticParser.TwoExpressionContext ctx) {
         Expression expression;
         if (ctx.PLUS() != null) {
-            expression = new Addition(terms.get(ctx.term()), expressions.get(ctx.expression()));
+            expression = new Addition(expressions.get(ctx.expression()), terms.get(ctx.term()));
         }
         else {
-            expression = new Subtraction(terms.get(ctx.term()), expressions.get(ctx.expression()));
+            expression = new Subtraction(expressions.get(ctx.expression()), terms.get(ctx.term()));
         }
         expressions.put(ctx, expression);
     }
@@ -49,10 +49,10 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     public void exitTwoTerm(ArithmeticParser.TwoTermContext ctx) {
         Term term;
         if (ctx.TIMES() != null) {
-            term = new Multiplication(factors.get(ctx.factor()), terms.get(ctx.term()));
+            term = new Multiplication(terms.get(ctx.term()), factors.get(ctx.factor()));
         }
         else {
-            term = new Division(factors.get(ctx.factor()), terms.get(ctx.term()));
+            term = new Division(terms.get(ctx.term()), factors.get(ctx.factor()));
         }
         terms.put(ctx, term);
     }

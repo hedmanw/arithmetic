@@ -1,7 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public class Subtraction extends Expression {
-    public Subtraction(Term left, Expression right) {
+    public Subtraction(Expression left, Term right) {
         super(left, right);
     }
 

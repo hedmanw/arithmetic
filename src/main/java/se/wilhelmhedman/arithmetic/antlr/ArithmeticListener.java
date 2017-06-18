@@ -20,18 +20,6 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitRoot(ArithmeticParser.RootContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code twoExpression}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterTwoExpression(ArithmeticParser.TwoExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code twoExpression}
-	 * labeled alternative in {@link ArithmeticParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitTwoExpression(ArithmeticParser.TwoExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code singleExpression}
 	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
@@ -44,17 +32,17 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitSingleExpression(ArithmeticParser.SingleExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code twoTerm}
-	 * labeled alternative in {@link ArithmeticParser#term}.
+	 * Enter a parse tree produced by the {@code twoExpression}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterTwoTerm(ArithmeticParser.TwoTermContext ctx);
+	void enterTwoExpression(ArithmeticParser.TwoExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code twoTerm}
-	 * labeled alternative in {@link ArithmeticParser#term}.
+	 * Exit a parse tree produced by the {@code twoExpression}
+	 * labeled alternative in {@link ArithmeticParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitTwoTerm(ArithmeticParser.TwoTermContext ctx);
+	void exitTwoExpression(ArithmeticParser.TwoExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code singleTerm}
 	 * labeled alternative in {@link ArithmeticParser#term}.
@@ -67,6 +55,18 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSingleTerm(ArithmeticParser.SingleTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code twoTerm}
+	 * labeled alternative in {@link ArithmeticParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterTwoTerm(ArithmeticParser.TwoTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code twoTerm}
+	 * labeled alternative in {@link ArithmeticParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitTwoTerm(ArithmeticParser.TwoTermContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ArithmeticParser#factor}.
 	 * @param ctx the parse tree

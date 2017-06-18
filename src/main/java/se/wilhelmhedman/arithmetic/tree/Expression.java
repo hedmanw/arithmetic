@@ -1,24 +1,24 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public abstract class Expression implements Evaluatable {
-    private final Term left;
-    private final Expression right;
+    private final Expression left;
+    private final Term right;
 
     public Expression(Term term) {
-        this.left = term;
-        this.right = null;
+        this.left = null;
+        this.right = term;
     }
 
-    public Expression(Term left, Expression right) {
+    public Expression(Expression  left, Term right) {
         this.left = left;
         this.right = right;
     }
 
-    public Term getLeft() {
+    public Expression  getLeft() {
         return left;
     }
 
-    public Expression getRight() {
+    public Term getRight() {
         return right;
     }
 }

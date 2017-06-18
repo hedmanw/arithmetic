@@ -7,11 +7,11 @@ public class SingleTerm extends Term {
 
     @Override
     public String toString() {
-        return getLeft().toString();
+        return getRight().toString();
     }
 
     @Override
     public double evaluate() {
-        return getLeft().evaluate();
+        return getRight().evaluate();
     }
 }

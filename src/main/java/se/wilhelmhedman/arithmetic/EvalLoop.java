@@ -20,7 +20,7 @@ public class EvalLoop {
                 }
 
                 ExpressionRunner expressionRunner = new ExpressionRunner(input);
-                double result = expressionRunner.evaluate();
+                String result = expressionRunner.evaluate();
                 System.out.println("< " + result);
             }
         } catch (IOException e) {

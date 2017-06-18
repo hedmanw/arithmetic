@@ -1,7 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public class Addition extends Expression {
-    public Addition(Term left, Expression right) {
+    public Addition(Expression left, Term right) {
         super(left, right);
     }
 

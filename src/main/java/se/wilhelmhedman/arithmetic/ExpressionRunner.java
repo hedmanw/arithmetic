@@ -26,9 +26,9 @@ public class ExpressionRunner {
         return listener.getResult();
     }
 
-    public double evaluate() {
+    public String evaluate() {
         Expression rootExp = getRoot();
 
-        return rootExp.evaluate();
+        return String.valueOf(rootExp.evaluate());
     }
 }

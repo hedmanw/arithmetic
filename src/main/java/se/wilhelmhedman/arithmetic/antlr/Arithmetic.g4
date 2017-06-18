@@ -7,11 +7,11 @@ grammar Arithmetic;
 root: expression;
 
 expression:
-      term (PLUS | MINUS) expression #twoExpression
+      expression (PLUS | MINUS) term #twoExpression
     | term #singleExpression
     ;
 term:
-      factor (TIMES | DIV) term #twoTerm
+      term (TIMES | DIV) factor #twoTerm
     | factor #singleTerm
     ;
 factor: atom (POW atom)*;
@@ -19,7 +19,7 @@ atom:
       number #singleAtom
     | LPAREN expression RPAREN #parenthesizedExpression
     ;
-number: MINUS? DIGIT+ ('.' DIGIT*)?;
+number: MINUS? DIGIT+ (POINT DIGIT*)?;
 
 LPAREN: '(';
 RPAREN: ')';

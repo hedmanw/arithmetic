@@ -1,24 +1,24 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public abstract class Term implements Evaluatable {
-    private final Factor left;
-    private final Term right;
+    private final Term left;
+    private final Factor right;
 
-    public Term(Factor left) {
-        this.left = left;
-        this.right = null;
+    public Term(Factor factor) {
+        this.left = null;
+        this.right = factor;
     }
 
-    public Term(Factor left, Term right) {
+    public Term(Term left, Factor right) {
         this.left = left;
         this.right = right;
     }
 
-    public Factor getLeft() {
+    public Term getLeft() {
         return left;
     }
 
-    public Term getRight() {
+    public Factor getRight() {
         return right;
     }
 }
