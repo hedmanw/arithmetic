@@ -7,12 +7,12 @@ grammar Arithmetic;
 root: expression;
 
 expression:
-      term (PLUS | MINUS) expression #twoTerm
-    | term #singleTerm
+      term (PLUS | MINUS) expression #twoExpression
+    | term #singleExpression
     ;
 term:
-      factor (TIMES | DIV) term #twoNumber
-    | factor #singleNumber
+      factor (TIMES | DIV) term #twoTerm
+    | factor #singleTerm
     ;
 factor: atom (POW atom)*;
 atom:

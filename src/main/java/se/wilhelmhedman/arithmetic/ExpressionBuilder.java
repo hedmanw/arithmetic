@@ -21,17 +21,14 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
         resultExpression = expressions.get(ctx.expression());
     }
 
-
-
     @Override
-    public void exitSingleTerm(ArithmeticParser.SingleTermContext ctx) {
+    public void exitSingleExpression(ArithmeticParser.SingleExpressionContext ctx) {
         SingleExpr expr = new SingleExpr(terms.get(ctx.term()));
         expressions.put(ctx, expr);
-        System.out.println("Visit singleTerm: " + expr.toString());
     }
 
     @Override
-    public void exitTwoTerm(ArithmeticParser.TwoTermContext ctx) {
+    public void exitTwoExpression(ArithmeticParser.TwoExpressionContext ctx) {
         Expression expression;
         if (ctx.PLUS() != null) {
             expression = new Addition(terms.get(ctx.term()), expressions.get(ctx.expression()));
@@ -39,19 +36,17 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
         else {
             expression = new Subtraction(terms.get(ctx.term()), expressions.get(ctx.expression()));
         }
-        System.out.println("Visit doubleTerm: " + expression.toString());
         expressions.put(ctx, expression);
     }
 
     @Override
-    public void exitSingleNumber(ArithmeticParser.SingleNumberContext ctx) {
+    public void exitSingleTerm(ArithmeticParser.SingleTermContext ctx) {
         SingleTerm term = new SingleTerm(factors.get(ctx.factor()));
         terms.put(ctx, term);
-        System.out.println("Visit singleNumber: " + term.toString());
     }
 
     @Override
-    public void exitTwoNumber(ArithmeticParser.TwoNumberContext ctx) {
+    public void exitTwoTerm(ArithmeticParser.TwoTermContext ctx) {
         Term term;
         if (ctx.TIMES() != null) {
             term = new Multiplication(factors.get(ctx.factor()), terms.get(ctx.term()));
@@ -59,7 +54,6 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
         else {
             term = new Division(factors.get(ctx.factor()), terms.get(ctx.term()));
         }
-        System.out.println("Visit doubleNumber: " + term.toString());
         terms.put(ctx, term);
     }
 
@@ -96,7 +90,6 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
         Literal l = new Literal(Double.parseDouble(ctx.getText()));
-        System.out.println("Visit number: " + l );
         literals.put(ctx, l);
     }
 

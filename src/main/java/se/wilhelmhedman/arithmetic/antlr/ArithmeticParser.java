@@ -134,21 +134,21 @@ public class ArithmeticParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SingleTermContext extends ExpressionContext {
+	public static class SingleExpressionContext extends ExpressionContext {
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
 		}
-		public SingleTermContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public SingleExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterSingleTerm(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterSingleExpression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitSingleTerm(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitSingleExpression(this);
 		}
 	}
-	public static class TwoTermContext extends ExpressionContext {
+	public static class TwoExpressionContext extends ExpressionContext {
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
 		}
@@ -157,14 +157,14 @@ public class ArithmeticParser extends Parser {
 		}
 		public TerminalNode PLUS() { return getToken(ArithmeticParser.PLUS, 0); }
 		public TerminalNode MINUS() { return getToken(ArithmeticParser.MINUS, 0); }
-		public TwoTermContext(ExpressionContext ctx) { copyFrom(ctx); }
+		public TwoExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterTwoTerm(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterTwoExpression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitTwoTerm(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitTwoExpression(this);
 		}
 	}
 
@@ -177,7 +177,7 @@ public class ArithmeticParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
-				_localctx = new TwoTermContext(_localctx);
+				_localctx = new TwoExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(14);
@@ -194,7 +194,7 @@ public class ArithmeticParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new SingleTermContext(_localctx);
+				_localctx = new SingleExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(18);
@@ -225,21 +225,21 @@ public class ArithmeticParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SingleNumberContext extends TermContext {
+	public static class SingleTermContext extends TermContext {
 		public FactorContext factor() {
 			return getRuleContext(FactorContext.class,0);
 		}
-		public SingleNumberContext(TermContext ctx) { copyFrom(ctx); }
+		public SingleTermContext(TermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterSingleNumber(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterSingleTerm(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitSingleNumber(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitSingleTerm(this);
 		}
 	}
-	public static class TwoNumberContext extends TermContext {
+	public static class TwoTermContext extends TermContext {
 		public FactorContext factor() {
 			return getRuleContext(FactorContext.class,0);
 		}
@@ -248,14 +248,14 @@ public class ArithmeticParser extends Parser {
 		}
 		public TerminalNode TIMES() { return getToken(ArithmeticParser.TIMES, 0); }
 		public TerminalNode DIV() { return getToken(ArithmeticParser.DIV, 0); }
-		public TwoNumberContext(TermContext ctx) { copyFrom(ctx); }
+		public TwoTermContext(TermContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterTwoNumber(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterTwoTerm(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitTwoNumber(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitTwoTerm(this);
 		}
 	}
 
@@ -268,7 +268,7 @@ public class ArithmeticParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
-				_localctx = new TwoNumberContext(_localctx);
+				_localctx = new TwoTermContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(21);
@@ -285,7 +285,7 @@ public class ArithmeticParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new SingleNumberContext(_localctx);
+				_localctx = new SingleTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(25);
