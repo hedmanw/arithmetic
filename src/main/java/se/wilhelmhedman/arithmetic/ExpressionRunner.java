@@ -14,7 +14,7 @@ public class ExpressionRunner {
         this.input = input;
     }
 
-    public Expression getRoot() {
+    protected Expression getRoot() {
         ANTLRInputStream inputStream = new ANTLRInputStream(input);
         ArithmeticLexer lexer = new ArithmeticLexer(inputStream);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -23,9 +23,12 @@ public class ExpressionRunner {
         ExpressionBuilder listener = new ExpressionBuilder();
         ParseTreeWalker.DEFAULT.walk(listener, parser.root());
 
-        Expression exp = listener.getResult();
-        System.out.println(exp.toString());
+        return listener.getResult();
+    }
 
-        return exp;
+    public double evaluate() {
+        Expression rootExp = getRoot();
+
+        return rootExp.evaluate();
     }
 }
