@@ -90,6 +90,30 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSingleAtom(ArithmeticParser.SingleAtomContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSingleAtom(ArithmeticParser.SingleAtomContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterParenthesizedExpression(ArithmeticParser.ParenthesizedExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParenthesizedExpression(ArithmeticParser.ParenthesizedExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumber(ArithmeticParser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}

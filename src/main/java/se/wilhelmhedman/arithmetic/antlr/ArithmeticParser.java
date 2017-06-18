@@ -22,9 +22,10 @@ public class ArithmeticParser extends Parser {
 		LPAREN=1, RPAREN=2, PLUS=3, MINUS=4, TIMES=5, DIV=6, POINT=7, POW=8, DIGIT=9, 
 		WS=10;
 	public static final int
-		RULE_root = 0, RULE_expression = 1, RULE_term = 2, RULE_factor = 3, RULE_number = 4;
+		RULE_root = 0, RULE_expression = 1, RULE_term = 2, RULE_factor = 3, RULE_atom = 4, 
+		RULE_number = 5;
 	public static final String[] ruleNames = {
-		"root", "expression", "term", "factor", "number"
+		"root", "expression", "term", "factor", "atom", "number"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -107,7 +108,7 @@ public class ArithmeticParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(10);
+			setState(12);
 			expression();
 			}
 		}
@@ -172,23 +173,23 @@ public class ArithmeticParser extends Parser {
 		enterRule(_localctx, 2, RULE_expression);
 		int _la;
 		try {
-			setState(17);
+			setState(19);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				_localctx = new TwoTermContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(12);
+				setState(14);
 				term();
-				setState(13);
+				setState(15);
 				_la = _input.LA(1);
 				if ( !(_la==PLUS || _la==MINUS) ) {
 				_errHandler.recoverInline(this);
 				} else {
 					consume();
 				}
-				setState(14);
+				setState(16);
 				expression();
 				}
 				break;
@@ -196,7 +197,7 @@ public class ArithmeticParser extends Parser {
 				_localctx = new SingleTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(16);
+				setState(18);
 				term();
 				}
 				break;
@@ -263,23 +264,23 @@ public class ArithmeticParser extends Parser {
 		enterRule(_localctx, 4, RULE_term);
 		int _la;
 		try {
-			setState(24);
+			setState(26);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				_localctx = new TwoNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(19);
+				setState(21);
 				factor();
-				setState(20);
+				setState(22);
 				_la = _input.LA(1);
 				if ( !(_la==TIMES || _la==DIV) ) {
 				_errHandler.recoverInline(this);
 				} else {
 					consume();
 				}
-				setState(21);
+				setState(23);
 				term();
 				}
 				break;
@@ -287,7 +288,7 @@ public class ArithmeticParser extends Parser {
 				_localctx = new SingleNumberContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(23);
+				setState(25);
 				factor();
 				}
 				break;
@@ -305,11 +306,11 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static class FactorContext extends ParserRuleContext {
-		public List<NumberContext> number() {
-			return getRuleContexts(NumberContext.class);
+		public List<AtomContext> atom() {
+			return getRuleContexts(AtomContext.class);
 		}
-		public NumberContext number(int i) {
-			return getRuleContext(NumberContext.class,i);
+		public AtomContext atom(int i) {
+			return getRuleContext(AtomContext.class,i);
 		}
 		public List<TerminalNode> POW() { return getTokens(ArithmeticParser.POW); }
 		public TerminalNode POW(int i) {
@@ -336,24 +337,114 @@ public class ArithmeticParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
-			number();
-			setState(31);
+			setState(28);
+			atom();
+			setState(33);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==POW) {
 				{
 				{
-				setState(27);
+				setState(29);
 				match(POW);
-				setState(28);
-				number();
+				setState(30);
+				atom();
 				}
 				}
-				setState(33);
+				setState(35);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class AtomContext extends ParserRuleContext {
+		public AtomContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_atom; }
+	 
+		public AtomContext() { }
+		public void copyFrom(AtomContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ParenthesizedExpressionContext extends AtomContext {
+		public TerminalNode LPAREN() { return getToken(ArithmeticParser.LPAREN, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode RPAREN() { return getToken(ArithmeticParser.RPAREN, 0); }
+		public ParenthesizedExpressionContext(AtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterParenthesizedExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitParenthesizedExpression(this);
+		}
+	}
+	public static class SingleAtomContext extends AtomContext {
+		public NumberContext number() {
+			return getRuleContext(NumberContext.class,0);
+		}
+		public SingleAtomContext(AtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterSingleAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitSingleAtom(this);
+		}
+	}
+
+	public final AtomContext atom() throws RecognitionException {
+		AtomContext _localctx = new AtomContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_atom);
+		try {
+			setState(41);
+			switch (_input.LA(1)) {
+			case EOF:
+			case RPAREN:
+			case PLUS:
+			case MINUS:
+			case TIMES:
+			case DIV:
+			case POW:
+			case DIGIT:
+				_localctx = new SingleAtomContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(36);
+				number();
+				}
+				break;
+			case LPAREN:
+				_localctx = new ParenthesizedExpressionContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(37);
+				match(LPAREN);
+				setState(38);
+				expression();
+				setState(39);
+				match(RPAREN);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -388,22 +479,22 @@ public class ArithmeticParser extends Parser {
 
 	public final NumberContext number() throws RecognitionException {
 		NumberContext _localctx = new NumberContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_number);
+		enterRule(_localctx, 10, RULE_number);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
+			setState(46);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==DIGIT) {
 				{
 				{
-				setState(34);
+				setState(43);
 				match(DIGIT);
 				}
 				}
-				setState(39);
+				setState(48);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -421,18 +512,20 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f+\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\24\n\3\3\4"+
-		"\3\4\3\4\3\4\3\4\5\4\33\n\4\3\5\3\5\3\5\7\5 \n\5\f\5\16\5#\13\5\3\6\7"+
-		"\6&\n\6\f\6\16\6)\13\6\3\6\2\2\7\2\4\6\b\n\2\4\3\2\5\6\3\2\7\b)\2\f\3"+
-		"\2\2\2\4\23\3\2\2\2\6\32\3\2\2\2\b\34\3\2\2\2\n\'\3\2\2\2\f\r\5\4\3\2"+
-		"\r\3\3\2\2\2\16\17\5\6\4\2\17\20\t\2\2\2\20\21\5\4\3\2\21\24\3\2\2\2\22"+
-		"\24\5\6\4\2\23\16\3\2\2\2\23\22\3\2\2\2\24\5\3\2\2\2\25\26\5\b\5\2\26"+
-		"\27\t\3\2\2\27\30\5\6\4\2\30\33\3\2\2\2\31\33\5\b\5\2\32\25\3\2\2\2\32"+
-		"\31\3\2\2\2\33\7\3\2\2\2\34!\5\n\6\2\35\36\7\n\2\2\36 \5\n\6\2\37\35\3"+
-		"\2\2\2 #\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\"\t\3\2\2\2#!\3\2\2\2$&\7\13\2"+
-		"\2%$\3\2\2\2&)\3\2\2\2\'%\3\2\2\2\'(\3\2\2\2(\13\3\2\2\2)\'\3\2\2\2\6"+
-		"\23\32!\'";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f\64\4\2\t\2\4\3"+
+		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\26"+
+		"\n\3\3\4\3\4\3\4\3\4\3\4\5\4\35\n\4\3\5\3\5\3\5\7\5\"\n\5\f\5\16\5%\13"+
+		"\5\3\6\3\6\3\6\3\6\3\6\5\6,\n\6\3\7\7\7/\n\7\f\7\16\7\62\13\7\3\7\2\2"+
+		"\b\2\4\6\b\n\f\2\4\3\2\5\6\3\2\7\b\62\2\16\3\2\2\2\4\25\3\2\2\2\6\34\3"+
+		"\2\2\2\b\36\3\2\2\2\n+\3\2\2\2\f\60\3\2\2\2\16\17\5\4\3\2\17\3\3\2\2\2"+
+		"\20\21\5\6\4\2\21\22\t\2\2\2\22\23\5\4\3\2\23\26\3\2\2\2\24\26\5\6\4\2"+
+		"\25\20\3\2\2\2\25\24\3\2\2\2\26\5\3\2\2\2\27\30\5\b\5\2\30\31\t\3\2\2"+
+		"\31\32\5\6\4\2\32\35\3\2\2\2\33\35\5\b\5\2\34\27\3\2\2\2\34\33\3\2\2\2"+
+		"\35\7\3\2\2\2\36#\5\n\6\2\37 \7\n\2\2 \"\5\n\6\2!\37\3\2\2\2\"%\3\2\2"+
+		"\2#!\3\2\2\2#$\3\2\2\2$\t\3\2\2\2%#\3\2\2\2&,\5\f\7\2\'(\7\3\2\2()\5\4"+
+		"\3\2)*\7\4\2\2*,\3\2\2\2+&\3\2\2\2+\'\3\2\2\2,\13\3\2\2\2-/\7\13\2\2."+
+		"-\3\2\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\r\3\2\2\2\62\60\3\2"+
+		"\2\2\7\25\34#+\60";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

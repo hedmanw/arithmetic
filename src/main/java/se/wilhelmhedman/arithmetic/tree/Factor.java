@@ -1,29 +1,26 @@
 package se.wilhelmhedman.arithmetic.tree;
 
-import java.util.List;
-import java.util.Stack;
-
 public class Factor {
-    private final Literal literal;
+    private final Atom atom;
     private final Factor factor;
 
-    public Factor(Literal literal) {
-        this.literal = literal;
+    public Factor(Atom atom) {
+        this.atom = atom;
         this.factor = null;
     }
 
-    public Factor(Literal literal, Factor factor) {
-        this.literal = literal;
+    public Factor(Atom atom, Factor factor) {
+        this.atom = atom;
         this.factor = factor;
     }
 
     @Override
     public String toString() {
         if (factor == null) {
-            return literal.toString();
+            return atom.toString();
         }
         else {
-            return literal.toString() + "^[" + factor.toString() + ']';
+            return atom.toString() + "^[" + factor.toString() + ']';
         }
     }
 }

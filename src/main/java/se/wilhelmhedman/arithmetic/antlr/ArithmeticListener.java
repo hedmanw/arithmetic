@@ -78,6 +78,30 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitFactor(ArithmeticParser.FactorContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code singleAtom}
+	 * labeled alternative in {@link ArithmeticParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterSingleAtom(ArithmeticParser.SingleAtomContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code singleAtom}
+	 * labeled alternative in {@link ArithmeticParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitSingleAtom(ArithmeticParser.SingleAtomContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parenthesizedExpression}
+	 * labeled alternative in {@link ArithmeticParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesizedExpression(ArithmeticParser.ParenthesizedExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parenthesizedExpression}
+	 * labeled alternative in {@link ArithmeticParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesizedExpression(ArithmeticParser.ParenthesizedExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ArithmeticParser#number}.
 	 * @param ctx the parse tree
 	 */

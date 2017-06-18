@@ -4,13 +4,13 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticBaseListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ExpressionBuilder extends ArithmeticBaseListener {
     private final Map<ArithmeticParser.NumberContext, Literal> literals = new HashMap<>();
+    private final Map<ArithmeticParser.AtomContext, Atom> atoms = new HashMap<>();
     private final Map<ArithmeticParser.FactorContext, Factor> factors = new HashMap<>();
     private final Map<ArithmeticParser.TermContext, Term> terms = new HashMap<>();
     private final Map<ArithmeticParser.ExpressionContext, Expression> expressions = new HashMap<>();
@@ -66,15 +66,14 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     @Override
     public void exitFactor(ArithmeticParser.FactorContext ctx) {
         Factor rootFactor;
-        List<ArithmeticParser.NumberContext> numbersInFactor = ctx.number();
-        if (numbersInFactor.size() == 1) {
-            rootFactor = new Factor(literals.get(ctx.number(0)));
+        List<ArithmeticParser.AtomContext> atomsInFactor = ctx.atom();
+        if (atomsInFactor.size() == 1) {
+            rootFactor = new Factor(atoms.get(ctx.atom(0)));
         }
         else {
-            Factor lastFactor = new Factor(literals.get(numbersInFactor.get(numbersInFactor.size()-1)));
-            // bygg upp bakifrån
-            for (int i = numbersInFactor.size() - 2; i >= 0; i--) {
-                Factor factor = new Factor(literals.get(numbersInFactor.get(i)), lastFactor);
+            Factor lastFactor = new Factor(atoms.get(atomsInFactor.get(atomsInFactor.size()-1)));
+            for (int i = atomsInFactor.size() - 2; i >= 0; i--) {
+                Factor factor = new Factor(atoms.get(atomsInFactor.get(i)), lastFactor);
                 lastFactor = factor;
             }
             rootFactor = lastFactor;
@@ -83,9 +82,21 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     }
 
     @Override
+    public void exitSingleAtom(ArithmeticParser.SingleAtomContext ctx) {
+        Atom atom = new SingleAtom(literals.get(ctx.number()));
+        atoms.put(ctx, atom);
+    }
+
+    @Override
+    public void exitParenthesizedExpression(ArithmeticParser.ParenthesizedExpressionContext ctx) {
+        Atom atom = new ParenthesizedAtom(expressions.get(ctx.expression()));
+        atoms.put(ctx, atom);
+    }
+
+    @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
         Literal l = new Literal(Double.parseDouble(ctx.getText()));
-        System.out.println("Visit number: " + l);
+        System.out.println("Visit number: " + l );
         literals.put(ctx, l);
     }
 

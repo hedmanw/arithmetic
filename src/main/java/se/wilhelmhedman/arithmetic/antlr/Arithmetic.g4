@@ -14,9 +14,11 @@ term:
       factor (TIMES | DIV) term #twoNumber
     | factor #singleNumber
     ;
-factor: number (POW number)*;
-//factor: atom (POW atom)*;
-//atom: number| LPAREN expression RPAREN;
+factor: atom (POW atom)*;
+atom:
+      number #singleAtom
+    | LPAREN expression RPAREN #parenthesizedExpression
+    ;
 number: DIGIT*;
 
 LPAREN: '(';
