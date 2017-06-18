@@ -13,6 +13,9 @@ public class ExpressionRunnerTest {
     public void getRoot() throws Exception {
         Map<String, String> input = new HashMap<String, String>() {{
             put("10", "10.0");
+            put("-10", "-10.0");
+            put("2+-10", "2.0+[-10.0]");
+            put("-10.1234", "-10.1234");
             put("1+2+3", "1.0+[2.0+[3.0]]");
             put("1+2-3", "1.0+[2.0-[3.0]]");
             put("1-2-3", "1.0-[2.0-[3.0]]");
@@ -23,6 +26,8 @@ public class ExpressionRunnerTest {
             put("10^2", "10.0^[2.0]");
             put("2*10^2", "2.0*[10.0^[2.0]]");
             put("10^2*2", "10.0^[2.0]*[2.0]");
+            put("(2*2)+2", "(2.0*[2.0])+[2.0]");
+            put("2*(2+2)", "2.0*[(2.0+[2.0])]");
         }};
 
         for (String key: input.keySet()) {

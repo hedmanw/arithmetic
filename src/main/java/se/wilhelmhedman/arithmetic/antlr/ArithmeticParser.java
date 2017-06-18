@@ -416,13 +416,7 @@ public class ArithmeticParser extends Parser {
 		try {
 			setState(41);
 			switch (_input.LA(1)) {
-			case EOF:
-			case RPAREN:
-			case PLUS:
 			case MINUS:
-			case TIMES:
-			case DIV:
-			case POW:
 			case DIGIT:
 				_localctx = new SingleAtomContext(_localctx);
 				enterOuterAlt(_localctx, 1);
@@ -459,6 +453,7 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static class NumberContext extends ParserRuleContext {
+		public TerminalNode MINUS() { return getToken(ArithmeticParser.MINUS, 0); }
 		public List<TerminalNode> DIGIT() { return getTokens(ArithmeticParser.DIGIT); }
 		public TerminalNode DIGIT(int i) {
 			return getToken(ArithmeticParser.DIGIT, i);
@@ -484,20 +479,52 @@ public class ArithmeticParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
-			_errHandler.sync(this);
+			setState(44);
 			_la = _input.LA(1);
-			while (_la==DIGIT) {
-				{
+			if (_la==MINUS) {
 				{
 				setState(43);
+				match(MINUS);
+				}
+			}
+
+			setState(47); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(46);
 				match(DIGIT);
 				}
 				}
-				setState(48);
+				setState(49); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
+			} while ( _la==DIGIT );
+			setState(58);
+			_la = _input.LA(1);
+			if (_la==POINT) {
+				{
+				setState(51);
+				match(POINT);
+				setState(55);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				while (_la==DIGIT) {
+					{
+					{
+					setState(52);
+					match(DIGIT);
+					}
+					}
+					setState(57);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				}
 			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -512,20 +539,23 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f\64\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\26"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f?\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\26"+
 		"\n\3\3\4\3\4\3\4\3\4\3\4\5\4\35\n\4\3\5\3\5\3\5\7\5\"\n\5\f\5\16\5%\13"+
-		"\5\3\6\3\6\3\6\3\6\3\6\5\6,\n\6\3\7\7\7/\n\7\f\7\16\7\62\13\7\3\7\2\2"+
-		"\b\2\4\6\b\n\f\2\4\3\2\5\6\3\2\7\b\62\2\16\3\2\2\2\4\25\3\2\2\2\6\34\3"+
-		"\2\2\2\b\36\3\2\2\2\n+\3\2\2\2\f\60\3\2\2\2\16\17\5\4\3\2\17\3\3\2\2\2"+
-		"\20\21\5\6\4\2\21\22\t\2\2\2\22\23\5\4\3\2\23\26\3\2\2\2\24\26\5\6\4\2"+
-		"\25\20\3\2\2\2\25\24\3\2\2\2\26\5\3\2\2\2\27\30\5\b\5\2\30\31\t\3\2\2"+
-		"\31\32\5\6\4\2\32\35\3\2\2\2\33\35\5\b\5\2\34\27\3\2\2\2\34\33\3\2\2\2"+
-		"\35\7\3\2\2\2\36#\5\n\6\2\37 \7\n\2\2 \"\5\n\6\2!\37\3\2\2\2\"%\3\2\2"+
-		"\2#!\3\2\2\2#$\3\2\2\2$\t\3\2\2\2%#\3\2\2\2&,\5\f\7\2\'(\7\3\2\2()\5\4"+
-		"\3\2)*\7\4\2\2*,\3\2\2\2+&\3\2\2\2+\'\3\2\2\2,\13\3\2\2\2-/\7\13\2\2."+
-		"-\3\2\2\2/\62\3\2\2\2\60.\3\2\2\2\60\61\3\2\2\2\61\r\3\2\2\2\62\60\3\2"+
-		"\2\2\7\25\34#+\60";
+		"\5\3\6\3\6\3\6\3\6\3\6\5\6,\n\6\3\7\5\7/\n\7\3\7\6\7\62\n\7\r\7\16\7\63"+
+		"\3\7\3\7\7\78\n\7\f\7\16\7;\13\7\5\7=\n\7\3\7\2\2\b\2\4\6\b\n\f\2\4\3"+
+		"\2\5\6\3\2\7\b@\2\16\3\2\2\2\4\25\3\2\2\2\6\34\3\2\2\2\b\36\3\2\2\2\n"+
+		"+\3\2\2\2\f.\3\2\2\2\16\17\5\4\3\2\17\3\3\2\2\2\20\21\5\6\4\2\21\22\t"+
+		"\2\2\2\22\23\5\4\3\2\23\26\3\2\2\2\24\26\5\6\4\2\25\20\3\2\2\2\25\24\3"+
+		"\2\2\2\26\5\3\2\2\2\27\30\5\b\5\2\30\31\t\3\2\2\31\32\5\6\4\2\32\35\3"+
+		"\2\2\2\33\35\5\b\5\2\34\27\3\2\2\2\34\33\3\2\2\2\35\7\3\2\2\2\36#\5\n"+
+		"\6\2\37 \7\n\2\2 \"\5\n\6\2!\37\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2"+
+		"$\t\3\2\2\2%#\3\2\2\2&,\5\f\7\2\'(\7\3\2\2()\5\4\3\2)*\7\4\2\2*,\3\2\2"+
+		"\2+&\3\2\2\2+\'\3\2\2\2,\13\3\2\2\2-/\7\6\2\2.-\3\2\2\2./\3\2\2\2/\61"+
+		"\3\2\2\2\60\62\7\13\2\2\61\60\3\2\2\2\62\63\3\2\2\2\63\61\3\2\2\2\63\64"+
+		"\3\2\2\2\64<\3\2\2\2\659\7\t\2\2\668\7\13\2\2\67\66\3\2\2\28;\3\2\2\2"+
+		"9\67\3\2\2\29:\3\2\2\2:=\3\2\2\2;9\3\2\2\2<\65\3\2\2\2<=\3\2\2\2=\r\3"+
+		"\2\2\2\n\25\34#+.\639<";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

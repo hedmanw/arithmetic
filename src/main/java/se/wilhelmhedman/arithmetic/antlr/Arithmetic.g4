@@ -19,7 +19,7 @@ atom:
       number #singleAtom
     | LPAREN expression RPAREN #parenthesizedExpression
     ;
-number: DIGIT*;
+number: MINUS? DIGIT+ ('.' DIGIT*)?;
 
 LPAREN: '(';
 RPAREN: ')';
