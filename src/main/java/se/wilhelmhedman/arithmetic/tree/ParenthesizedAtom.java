@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class ParenthesizedAtom extends Atom {
     private final Expression expression;
 
@@ -13,7 +15,7 @@ public class ParenthesizedAtom extends Atom {
     }
 
     @Override
-    public double evaluate() {
+    public BigDecimal evaluate() {
         return expression.evaluate();
     }
 }

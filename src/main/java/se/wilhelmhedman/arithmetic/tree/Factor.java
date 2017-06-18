@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class Factor implements Evaluatable {
     private final Atom atom;
     private final Factor factor;
@@ -25,12 +27,13 @@ public class Factor implements Evaluatable {
     }
 
     @Override
-    public double evaluate() {
+    public BigDecimal evaluate() {
         if (factor == null) {
             return atom.evaluate();
         }
         else {
-            return Math.pow(atom.evaluate(), factor.evaluate());
+            // TODO: investigate non-integer powers using the formula X^(A+B)=X^A*X^B, where A is the integer part of the BigDecimal, and B the decimal part
+            return atom.evaluate().pow(factor.evaluate().intValue());
         }
     }
 }

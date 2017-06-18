@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class SingleExpr extends Expression {
     public SingleExpr(Term literal) {
         super(literal);
@@ -11,7 +13,7 @@ public class SingleExpr extends Expression {
     }
 
     @Override
-    public double evaluate() {
+    public BigDecimal evaluate() {
         return getRight().evaluate();
     }
 }

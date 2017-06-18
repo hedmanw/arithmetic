@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public interface Evaluatable {
-    double evaluate();
+    BigDecimal evaluate();
 }

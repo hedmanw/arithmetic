@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class Multiplication extends Term {
     public Multiplication(Term left, Factor right) {
         super(left, right);
@@ -11,7 +13,7 @@ public class Multiplication extends Term {
     }
 
     @Override
-    public double evaluate() {
-        return getLeft().evaluate() * getRight().evaluate();
+    public BigDecimal evaluate() {
+        return getLeft().evaluate().multiply(getRight().evaluate());
     }
 }

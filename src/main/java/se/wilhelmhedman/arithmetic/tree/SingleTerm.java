@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class SingleTerm extends Term {
     public SingleTerm(Factor factor) {
         super(factor);
@@ -11,7 +13,7 @@ public class SingleTerm extends Term {
     }
 
     @Override
-    public double evaluate() {
+    public BigDecimal evaluate() {
         return getRight().evaluate();
     }
 }

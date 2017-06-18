@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class SingleAtom extends Atom {
     private final Literal literal;
 
@@ -13,7 +15,7 @@ public class SingleAtom extends Atom {
     }
 
     @Override
-    public double evaluate() {
+    public BigDecimal evaluate() {
         return literal.evaluate();
     }
 }

@@ -89,7 +89,7 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
 
     @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
-        Literal l = new Literal(Double.parseDouble(ctx.getText()));
+        Literal l = new Literal(ctx.getText());
         literals.put(ctx, l);
     }
 

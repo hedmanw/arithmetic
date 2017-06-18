@@ -1,5 +1,8 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Division extends Term {
     public Division(Term left, Factor right) {
         super(left, right);
@@ -11,7 +14,7 @@ public class Division extends Term {
     }
 
     @Override
-    public double evaluate() {
-        return getLeft().evaluate() / getRight().evaluate();
+    public BigDecimal evaluate() {
+        return getLeft().evaluate().divide(getRight().evaluate(), RoundingMode.HALF_EVEN);
     }
 }

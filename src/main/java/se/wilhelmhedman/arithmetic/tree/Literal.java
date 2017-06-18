@@ -1,19 +1,21 @@
 package se.wilhelmhedman.arithmetic.tree;
 
-public class Literal implements Evaluatable {
-    private final double value;
+import java.math.BigDecimal;
 
-    public Literal(double d) {
-        this.value = d;
+public class Literal implements Evaluatable {
+    private final BigDecimal value;
+
+    public Literal(String s) {
+        this.value = new BigDecimal(s);
     }
 
     @Override
     public String toString() {
-        return Double.toString(value);
+        return value.toString();
     }
 
     @Override
-    public double evaluate() {
+    public BigDecimal evaluate() {
         return value;
     }
 }

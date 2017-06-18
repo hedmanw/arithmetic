@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import java.math.BigDecimal;
+
 public class Addition extends Expression {
     public Addition(Expression left, Term right) {
         super(left, right);
@@ -11,7 +13,7 @@ public class Addition extends Expression {
     }
 
     @Override
-    public double evaluate() {
-        return getLeft().evaluate() + getRight().evaluate();
+    public BigDecimal evaluate() {
+        return getLeft().evaluate().add(getRight().evaluate());
     }
 }
