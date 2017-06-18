@@ -68,6 +68,16 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitSingleNumber(ArithmeticParser.SingleNumberContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ArithmeticParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterFactor(ArithmeticParser.FactorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ArithmeticParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitFactor(ArithmeticParser.FactorContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ArithmeticParser#number}.
 	 * @param ctx the parse tree
 	 */

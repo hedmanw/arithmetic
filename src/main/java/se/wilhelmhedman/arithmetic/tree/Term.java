@@ -1,20 +1,20 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public abstract class Term {
-    private final Literal left;
+    private final Factor left;
     private final Term right;
 
-    public Term(Literal left) {
+    public Term(Factor left) {
         this.left = left;
         this.right = null;
     }
 
-    public Term(Literal left, Term right) {
+    public Term(Factor left, Term right) {
         this.left = left;
         this.right = right;
     }
 
-    public Literal getLeft() {
+    public Factor getLeft() {
         return left;
     }
 

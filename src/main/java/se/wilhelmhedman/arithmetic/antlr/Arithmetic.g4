@@ -1,5 +1,5 @@
 grammar Arithmetic;
-
+// java -jar antlr4-4.5.3.jar /home/wilhelm/develop/arithmetic/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4
 @header {
     package se.wilhelmhedman.arithmetic.antlr;
 }
@@ -11,13 +11,13 @@ expression:
     | term #singleTerm
     ;
 term:
-      number (TIMES | DIV) term #twoNumber
-    | number #singleNumber
+      factor (TIMES | DIV) term #twoNumber
+    | factor #singleNumber
     ;
-//term: factor ((TIMES | DIV) factor)*;
+factor: number (POW number)*;
 //factor: atom (POW atom)*;
-//atom: number | LPAREN expression RPAREN;
-number: DIGIT;
+//atom: number| LPAREN expression RPAREN;
+number: DIGIT*;
 
 LPAREN: '(';
 RPAREN: ')';

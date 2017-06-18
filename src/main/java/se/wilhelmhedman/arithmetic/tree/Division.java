@@ -1,7 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public class Division extends Term {
-    public Division(Literal left, Term right) {
+    public Division(Factor left, Term right) {
         super(left, right);
     }
 

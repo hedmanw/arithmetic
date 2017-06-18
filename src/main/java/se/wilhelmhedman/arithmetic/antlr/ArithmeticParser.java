@@ -22,9 +22,9 @@ public class ArithmeticParser extends Parser {
 		LPAREN=1, RPAREN=2, PLUS=3, MINUS=4, TIMES=5, DIV=6, POINT=7, POW=8, DIGIT=9, 
 		WS=10;
 	public static final int
-		RULE_root = 0, RULE_expression = 1, RULE_term = 2, RULE_number = 3;
+		RULE_root = 0, RULE_expression = 1, RULE_term = 2, RULE_factor = 3, RULE_number = 4;
 	public static final String[] ruleNames = {
-		"root", "expression", "term", "number"
+		"root", "expression", "term", "factor", "number"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -107,7 +107,7 @@ public class ArithmeticParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(8);
+			setState(10);
 			expression();
 			}
 		}
@@ -172,23 +172,23 @@ public class ArithmeticParser extends Parser {
 		enterRule(_localctx, 2, RULE_expression);
 		int _la;
 		try {
-			setState(15);
+			setState(17);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				_localctx = new TwoTermContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(10);
+				setState(12);
 				term();
-				setState(11);
+				setState(13);
 				_la = _input.LA(1);
 				if ( !(_la==PLUS || _la==MINUS) ) {
 				_errHandler.recoverInline(this);
 				} else {
 					consume();
 				}
-				setState(12);
+				setState(14);
 				expression();
 				}
 				break;
@@ -196,7 +196,7 @@ public class ArithmeticParser extends Parser {
 				_localctx = new SingleTermContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(14);
+				setState(16);
 				term();
 				}
 				break;
@@ -225,8 +225,8 @@ public class ArithmeticParser extends Parser {
 		}
 	}
 	public static class SingleNumberContext extends TermContext {
-		public NumberContext number() {
-			return getRuleContext(NumberContext.class,0);
+		public FactorContext factor() {
+			return getRuleContext(FactorContext.class,0);
 		}
 		public SingleNumberContext(TermContext ctx) { copyFrom(ctx); }
 		@Override
@@ -239,8 +239,8 @@ public class ArithmeticParser extends Parser {
 		}
 	}
 	public static class TwoNumberContext extends TermContext {
-		public NumberContext number() {
-			return getRuleContext(NumberContext.class,0);
+		public FactorContext factor() {
+			return getRuleContext(FactorContext.class,0);
 		}
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
@@ -263,23 +263,23 @@ public class ArithmeticParser extends Parser {
 		enterRule(_localctx, 4, RULE_term);
 		int _la;
 		try {
-			setState(22);
+			setState(24);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				_localctx = new TwoNumberContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(17);
-				number();
-				setState(18);
+				setState(19);
+				factor();
+				setState(20);
 				_la = _input.LA(1);
 				if ( !(_la==TIMES || _la==DIV) ) {
 				_errHandler.recoverInline(this);
 				} else {
 					consume();
 				}
-				setState(19);
+				setState(21);
 				term();
 				}
 				break;
@@ -287,8 +287,8 @@ public class ArithmeticParser extends Parser {
 				_localctx = new SingleNumberContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(21);
-				number();
+				setState(23);
+				factor();
 				}
 				break;
 			}
@@ -304,8 +304,74 @@ public class ArithmeticParser extends Parser {
 		return _localctx;
 	}
 
+	public static class FactorContext extends ParserRuleContext {
+		public List<NumberContext> number() {
+			return getRuleContexts(NumberContext.class);
+		}
+		public NumberContext number(int i) {
+			return getRuleContext(NumberContext.class,i);
+		}
+		public List<TerminalNode> POW() { return getTokens(ArithmeticParser.POW); }
+		public TerminalNode POW(int i) {
+			return getToken(ArithmeticParser.POW, i);
+		}
+		public FactorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_factor; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterFactor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitFactor(this);
+		}
+	}
+
+	public final FactorContext factor() throws RecognitionException {
+		FactorContext _localctx = new FactorContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_factor);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(26);
+			number();
+			setState(31);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==POW) {
+				{
+				{
+				setState(27);
+				match(POW);
+				setState(28);
+				number();
+				}
+				}
+				setState(33);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class NumberContext extends ParserRuleContext {
-		public TerminalNode DIGIT() { return getToken(ArithmeticParser.DIGIT, 0); }
+		public List<TerminalNode> DIGIT() { return getTokens(ArithmeticParser.DIGIT); }
+		public TerminalNode DIGIT(int i) {
+			return getToken(ArithmeticParser.DIGIT, i);
+		}
 		public NumberContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -322,12 +388,25 @@ public class ArithmeticParser extends Parser {
 
 	public final NumberContext number() throws RecognitionException {
 		NumberContext _localctx = new NumberContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_number);
+		enterRule(_localctx, 8, RULE_number);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(24);
-			match(DIGIT);
+			setState(37);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==DIGIT) {
+				{
+				{
+				setState(34);
+				match(DIGIT);
+				}
+				}
+				setState(39);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -342,14 +421,18 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f\35\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\4\5\t\5\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\22\n\3\3\4\3\4\3"+
-		"\4\3\4\3\4\5\4\31\n\4\3\5\3\5\3\5\2\2\6\2\4\6\b\2\4\3\2\5\6\3\2\7\b\32"+
-		"\2\n\3\2\2\2\4\21\3\2\2\2\6\30\3\2\2\2\b\32\3\2\2\2\n\13\5\4\3\2\13\3"+
-		"\3\2\2\2\f\r\5\6\4\2\r\16\t\2\2\2\16\17\5\4\3\2\17\22\3\2\2\2\20\22\5"+
-		"\6\4\2\21\f\3\2\2\2\21\20\3\2\2\2\22\5\3\2\2\2\23\24\5\b\5\2\24\25\t\3"+
-		"\2\2\25\26\5\6\4\2\26\31\3\2\2\2\27\31\5\b\5\2\30\23\3\2\2\2\30\27\3\2"+
-		"\2\2\31\7\3\2\2\2\32\33\7\13\2\2\33\t\3\2\2\2\4\21\30";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f+\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\3\3\3\5\3\24\n\3\3\4"+
+		"\3\4\3\4\3\4\3\4\5\4\33\n\4\3\5\3\5\3\5\7\5 \n\5\f\5\16\5#\13\5\3\6\7"+
+		"\6&\n\6\f\6\16\6)\13\6\3\6\2\2\7\2\4\6\b\n\2\4\3\2\5\6\3\2\7\b)\2\f\3"+
+		"\2\2\2\4\23\3\2\2\2\6\32\3\2\2\2\b\34\3\2\2\2\n\'\3\2\2\2\f\r\5\4\3\2"+
+		"\r\3\3\2\2\2\16\17\5\6\4\2\17\20\t\2\2\2\20\21\5\4\3\2\21\24\3\2\2\2\22"+
+		"\24\5\6\4\2\23\16\3\2\2\2\23\22\3\2\2\2\24\5\3\2\2\2\25\26\5\b\5\2\26"+
+		"\27\t\3\2\2\27\30\5\6\4\2\30\33\3\2\2\2\31\33\5\b\5\2\32\25\3\2\2\2\32"+
+		"\31\3\2\2\2\33\7\3\2\2\2\34!\5\n\6\2\35\36\7\n\2\2\36 \5\n\6\2\37\35\3"+
+		"\2\2\2 #\3\2\2\2!\37\3\2\2\2!\"\3\2\2\2\"\t\3\2\2\2#!\3\2\2\2$&\7\13\2"+
+		"\2%$\3\2\2\2&)\3\2\2\2\'%\3\2\2\2\'(\3\2\2\2(\13\3\2\2\2)\'\3\2\2\2\6"+
+		"\23\32!\'";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

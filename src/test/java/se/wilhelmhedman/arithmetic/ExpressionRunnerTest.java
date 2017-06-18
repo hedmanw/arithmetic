@@ -12,12 +12,17 @@ public class ExpressionRunnerTest {
     @Test
     public void getRoot() throws Exception {
         Map<String, String> input = new HashMap<String, String>() {{
+            put("10", "10.0");
             put("1+2+3", "1.0+[2.0+[3.0]]");
             put("1+2-3", "1.0+[2.0-[3.0]]");
             put("1-2-3", "1.0-[2.0-[3.0]]");
             put("1-2+3", "1.0-[2.0+[3.0]]");
             put("1+2*3", "1.0+[2.0*[3.0]]");
             put("1*2+3", "1.0*[2.0]+[3.0]");
+            put("1*2*3", "1.0*[2.0*[3.0]]");
+            put("10^2", "10.0^[2.0]");
+            put("2*10^2", "2.0*[10.0^[2.0]]");
+            put("10^2*2", "10.0^[2.0]*[2.0]");
         }};
 
         for (String key: input.keySet()) {

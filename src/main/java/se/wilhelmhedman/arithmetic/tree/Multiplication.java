@@ -1,7 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public class Multiplication extends Term {
-    public Multiplication(Literal left, Term right) {
+    public Multiplication(Factor left, Term right) {
         super(left, right);
     }
 

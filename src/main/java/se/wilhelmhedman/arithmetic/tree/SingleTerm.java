@@ -1,8 +1,8 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 public class SingleTerm extends Term {
-    public SingleTerm(Literal literal) {
-        super(literal);
+    public SingleTerm(Factor factor) {
+        super(factor);
     }
 
     @Override
