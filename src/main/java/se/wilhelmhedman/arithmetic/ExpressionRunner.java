@@ -7,7 +7,11 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticLexer;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 public class ExpressionRunner {
+    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000);
     private final String input;
 
     public ExpressionRunner(String input) {
@@ -28,7 +32,15 @@ public class ExpressionRunner {
 
     public String evaluate() {
         Expression rootExp = getRoot();
+        BigDecimal result = rootExp.evaluate().stripTrailingZeros();
 
-        return String.valueOf(rootExp.evaluate());
+        String resultString;
+        if (result.abs(MathContext.DECIMAL64).compareTo(ONE_MILLION) > 0) {
+            resultString = result.toEngineeringString();
+        }
+        else {
+            resultString = result.toString();
+        }
+        return resultString;
     }
 }

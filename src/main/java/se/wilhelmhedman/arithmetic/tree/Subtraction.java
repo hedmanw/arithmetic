@@ -1,6 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class Subtraction extends Expression {
     public Subtraction(Expression left, Term right) {
@@ -14,6 +15,6 @@ public class Subtraction extends Expression {
 
     @Override
     public BigDecimal evaluate() {
-        return getLeft().evaluate().subtract(getRight().evaluate());
+        return getLeft().evaluate().subtract(getRight().evaluate(), MathContext.DECIMAL64);
     }
 }

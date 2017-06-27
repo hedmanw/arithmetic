@@ -15,6 +15,6 @@ public class Division extends Term {
 
     @Override
     public BigDecimal evaluate() {
-        return getLeft().evaluate().divide(getRight().evaluate(), RoundingMode.HALF_EVEN);
+        return getLeft().evaluate().divide(getRight().evaluate(), 4, RoundingMode.HALF_UP);
     }
 }

@@ -1,6 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class Factor implements Evaluatable {
     private final Atom atom;
@@ -33,7 +34,7 @@ public class Factor implements Evaluatable {
         }
         else {
             // TODO: investigate non-integer powers using the formula X^(A+B)=X^A*X^B, where A is the integer part of the BigDecimal, and B the decimal part
-            return atom.evaluate().pow(factor.evaluate().intValue());
+            return atom.evaluate().pow(factor.evaluate().intValue(), MathContext.DECIMAL64);
         }
     }
 }
