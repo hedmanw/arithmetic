@@ -1,6 +1,7 @@
 package se.wilhelmhedman.arithmetic;
 
 import org.junit.Test;
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
 import java.util.HashMap;
@@ -77,5 +78,20 @@ public class ExpressionRunnerTest {
 
         er = new ExpressionRunner("0.0001*0.5");
         assertEquals("0.00005", er.evaluate());
+    }
+
+    @Test
+    public void syntaxErrors() throws Exception {
+        assertThrown(new ExpressionRunner("50+"), 3);
+        assertThrown(new ExpressionRunner("+"), 0);
+    }
+
+    private void assertThrown(ExpressionRunner er, int expected) {
+        try {
+            er.evaluate();
+            fail();
+        } catch (EvaluationException e) {
+            assertEquals(expected, e.getOffendingCharIndex());
+        }
     }
 }

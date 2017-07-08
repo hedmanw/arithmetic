@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic;
 
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +22,19 @@ public class EvalLoop {
                 }
 
                 ExpressionRunner expressionRunner = new ExpressionRunner(input);
-                String result = expressionRunner.evaluate();
+                String result;
+                try {
+                    result = expressionRunner.evaluate();
+                } catch (EvaluationException e) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(' ');
+                    for (int i = 0; i < e.getOffendingCharIndex(); i++) {
+                        sb.append(' ');
+                    }
+                    sb.append('^');
+                    System.out.println(sb.toString());
+                    result = e.getMessage();
+                }
                 System.out.println("< " + result);
             }
         } catch (IOException e) {
