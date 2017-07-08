@@ -57,6 +57,18 @@ public class ExpressionRunnerTest {
         er = new ExpressionRunner("999999");
         assertEquals("999999", er.evaluate());
 
+        er = new ExpressionRunner("100^0.5");
+        assertEquals("10", er.evaluate());
+
+        er = new ExpressionRunner("5^2");
+        assertEquals("25", er.evaluate());
+
+        er = new ExpressionRunner("10^3");
+        assertEquals("1000", er.evaluate());
+
+        er = new ExpressionRunner("10^-2");
+        assertEquals("0.01", er.evaluate());
+
         er = new ExpressionRunner("1000000");
         assertEquals("1E+6", er.evaluate());
 
