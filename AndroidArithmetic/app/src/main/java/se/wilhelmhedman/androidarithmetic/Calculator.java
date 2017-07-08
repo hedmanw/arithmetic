@@ -38,6 +38,7 @@ public class Calculator extends AppCompatActivity {
                 R.id.buttonDecimal,
                 R.id.buttonRParen,
                 R.id.buttonLParen,
+                R.id.buttonSquare,
 
         };
 

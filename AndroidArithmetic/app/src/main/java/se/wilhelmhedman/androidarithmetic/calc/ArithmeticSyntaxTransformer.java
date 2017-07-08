@@ -12,6 +12,7 @@ public class ArithmeticSyntaxTransformer {
         temp = temp.replace('÷', '/');
         temp = temp.replace('+', '+');
         temp = temp.replace('−', '-');
+        temp = temp.replace("²", "^2");
         return temp;
     }
 }
