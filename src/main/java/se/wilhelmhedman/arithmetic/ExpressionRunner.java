@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class ExpressionRunner {
-    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000);
+    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000, MathContext.DECIMAL64);
     private final String input;
 
     public ExpressionRunner(String input) {
@@ -35,11 +35,11 @@ public class ExpressionRunner {
         BigDecimal result = rootExp.evaluate().stripTrailingZeros();
 
         String resultString;
-        if (result.abs(MathContext.DECIMAL64).compareTo(ONE_MILLION) > 0) {
-            resultString = result.toEngineeringString();
+        if (result.abs(MathContext.DECIMAL64).compareTo(ONE_MILLION) >= 0) {
+            resultString = result.toString();
         }
         else {
-            resultString = result.toString();
+            resultString = result.toPlainString();
         }
         return resultString;
     }
