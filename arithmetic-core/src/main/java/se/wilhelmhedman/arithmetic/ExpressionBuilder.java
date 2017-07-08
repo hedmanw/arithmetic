@@ -1,6 +1,7 @@
 package se.wilhelmhedman.arithmetic;
 
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticBaseListener;
+import se.wilhelmhedman.arithmetic.antlr.ArithmeticErrorListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.*;
 
@@ -15,6 +16,11 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     private final Map<ArithmeticParser.TermContext, Term> terms = new HashMap<>();
     private final Map<ArithmeticParser.ExpressionContext, Expression> expressions = new HashMap<>();
     private Expression resultExpression;
+    private ArithmeticErrorListener arithmeticErrorListener;
+
+    public ExpressionBuilder(ArithmeticErrorListener arithmeticErrorListener) {
+        this.arithmeticErrorListener = arithmeticErrorListener;
+    }
 
     @Override
     public void exitRoot(ArithmeticParser.RootContext ctx) {
@@ -89,8 +95,14 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
 
     @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
-        Literal l = new Literal(ctx.getText());
-        literals.put(ctx, l);
+        String text = ctx.getText();
+        if (text.equals("-")) {
+            arithmeticErrorListener.syntaxError(null, null, 0, ctx.getStart().getCharPositionInLine(), "Illegal number (-).", null);
+        }
+        else {
+            Literal l = new Literal(text);
+            literals.put(ctx, l);
+        }
     }
 
     public Expression getResult() {

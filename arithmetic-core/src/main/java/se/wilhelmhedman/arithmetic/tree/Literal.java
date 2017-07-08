@@ -6,6 +6,7 @@ public class Literal implements Evaluatable {
     private final BigDecimal value;
 
     public Literal(String s) {
+        System.out.println(s);
         this.value = new BigDecimal(s);
     }
 

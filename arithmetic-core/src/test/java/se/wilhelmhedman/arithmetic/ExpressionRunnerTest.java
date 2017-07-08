@@ -84,6 +84,7 @@ public class ExpressionRunnerTest {
     public void syntaxErrors() throws Exception {
         assertThrown(new ExpressionRunner("50+"), 3);
         assertThrown(new ExpressionRunner("+"), 0);
+        assertThrown(new ExpressionRunner("(-"), 2);
     }
 
     private void assertThrown(ExpressionRunner er, int expected) {

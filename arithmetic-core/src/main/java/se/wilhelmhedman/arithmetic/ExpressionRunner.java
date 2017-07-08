@@ -31,7 +31,7 @@ public class ExpressionRunner {
         ArithmeticErrorListener errorListener = new ArithmeticErrorListener();
         parser.removeErrorListeners();
         parser.addErrorListener(errorListener);
-        ExpressionBuilder listener = new ExpressionBuilder();
+        ExpressionBuilder listener = new ExpressionBuilder(errorListener);
 
         ParseTreeWalker.DEFAULT.walk(listener, parser.root());
 
