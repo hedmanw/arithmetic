@@ -81,7 +81,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         else {
             optimisticIndex = Math.min(actualPressedIndex, textLength());
         }
-        caretIndex = optimisticIndex;
+        caretIndex = Math.max(0, optimisticIndex);
         debugStatement = "L=" + pressedLine + ",C=" + pressedColumn + ",API=" + actualPressedIndex + ",LCPL=" + optimisticIndex + ",CPL=" + charsPerLine;
     }
 
@@ -95,7 +95,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
             canvas.drawLine(x, y, x, y+lineHeight, caretPaint);
         }
 
-        canvas.drawText(debugStatement, 2, 10, caretPaint);
+//        canvas.drawText(debugStatement, 2, 10, caretPaint);
     }
 
     public void addText(CharSequence string) {
