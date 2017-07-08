@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import se.wilhelmhedman.androidarithmetic.calc.ArithmeticFacade;
-import se.wilhelmhedman.androidarithmetic.calc.ArithmeticResponse;
+import se.wilhelmhedman.androidarithmetic.calc.IArithmeticQuery;
+import se.wilhelmhedman.androidarithmetic.calc.ParsedArithmeticResponse;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorInputTextView;
 
 public class Calculator extends AppCompatActivity {
@@ -78,9 +79,11 @@ public class Calculator extends AppCompatActivity {
             public void onClick(View view) {
                 CharSequence text = typingTextView.getText();
                 if (text.length() > 0) {
-                    ArithmeticResponse response = ArithmeticFacade.execute(text.toString());
+                    IArithmeticQuery response = ArithmeticFacade.execute(text.toString());
                     resultTextView.setText(response.toString());
-                    typingTextView.clear();
+                    if (!response.hasErrors()) {
+                        typingTextView.clear();
+                    }
                 }
             }
         });

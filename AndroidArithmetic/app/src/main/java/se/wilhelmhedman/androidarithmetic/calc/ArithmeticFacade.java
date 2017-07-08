@@ -1,19 +1,23 @@
 package se.wilhelmhedman.androidarithmetic.calc;
 
 import se.wilhelmhedman.arithmetic.ExpressionRunner;
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
 
 public class ArithmeticFacade {
-    public static ArithmeticResponse execute(String input) {
+    public static IArithmeticQuery execute(String input) {
         ArithmeticSyntaxTransformer ast = new ArithmeticSyntaxTransformer();
         String preprocessed = ast.transform(input);
         ExpressionRunner runner = new ExpressionRunner(preprocessed);
 
-        String result = null;
+        IArithmeticQuery response;
         try {
-            result = runner.evaluate();
-        } catch (Exception e) {
-            result = "Syntax error!";
+            String result = runner.evaluate();
+            response = new ParsedArithmeticResponse(input, result);
+            CalculationRepository.addResponse(response);
+        } catch (EvaluationException e) {
+            response = new SyntaxErrorResponse(input, e.getMessage(), e.getOffendingCharIndex());
         }
-        return new ArithmeticResponse(input, result);
+
+        return response;
     }
 }

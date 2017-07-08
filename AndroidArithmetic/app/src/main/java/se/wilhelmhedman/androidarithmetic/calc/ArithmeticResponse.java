@@ -1,6 +1,7 @@
 package se.wilhelmhedman.androidarithmetic.calc;
 
-public class ArithmeticResponse {
+
+public abstract class ArithmeticResponse implements IArithmeticQuery {
     private String request;
     private String result;
 
@@ -10,7 +11,12 @@ public class ArithmeticResponse {
     }
 
     @Override
-    public String toString() {
-        return request + "=\n" + result;
+    public String getRequest() {
+        return request;
+    }
+
+    @Override
+    public String getResult() {
+        return result;
     }
 }
