@@ -1,5 +1,7 @@
 package se.wilhelmhedman.androidarithmetic;
 
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +10,6 @@ import android.widget.TextView;
 
 import se.wilhelmhedman.androidarithmetic.calc.ArithmeticFacade;
 import se.wilhelmhedman.androidarithmetic.calc.IArithmeticQuery;
-import se.wilhelmhedman.androidarithmetic.calc.ParsedArithmeticResponse;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorInputTextView;
 
 public class Calculator extends AppCompatActivity {
@@ -85,6 +86,15 @@ public class Calculator extends AppCompatActivity {
                         typingTextView.clear();
                     }
                 }
+            }
+        });
+
+        resultTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startHistory = new Intent(getBaseContext(), History.class);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+                startActivity(startHistory, options.toBundle());
             }
         });
     }

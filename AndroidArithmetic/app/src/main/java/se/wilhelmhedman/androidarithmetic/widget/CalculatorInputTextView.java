@@ -47,6 +47,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        // TODO: correct charsPerLine w.r.t. padding
         charsPerLine = (int) Math.floor(getWidth()/charWidth);
     }
 
@@ -89,7 +90,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (textLength() > 0) {
-            float x = (caretIndex%charsPerLine)*charWidth;
+            float x = (caretIndex%charsPerLine)*charWidth + getPaddingStart();
             int y = (caretIndex/charsPerLine) * lineHeight + 4;
 
             canvas.drawLine(x, y, x, y+lineHeight, caretPaint);

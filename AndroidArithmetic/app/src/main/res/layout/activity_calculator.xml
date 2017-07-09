@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:minLines="2"
         android:layout_weight="1"
-        android:textColor="@android:color/black"
-        android:textSize="36sp" />
+        style="@style/CalculatorText" />
 
     <View
         android:layout_width="match_parent"
@@ -28,8 +27,7 @@
         android:minLines="2"
         android:maxLines="2"
         android:fontFamily="monospace"
-        android:textColor="@android:color/black"
-        android:textSize="36sp" />
+        style="@style/CalculatorText" />
 
     <View
         android:layout_width="match_parent"
