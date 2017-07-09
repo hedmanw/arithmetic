@@ -5,43 +5,58 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import se.wilhelmhedman.androidarithmetic.R;
+
 
 public class CalculatorInputTextView extends android.support.v7.widget.AppCompatTextView {
+    public static final float STROKE_WIDTH = 3f;
+    private static final float[] CHEVRON = new float[] { // (x0, y0), (x1, y1)... see Canvas.drawLines
+            -5, 2, 1, -7, 1, -7, 7, 2
+    };
     private final Paint caretPaint;
+    private final Paint errorPaint;
     private int lineHeight;
     private float charWidth;
     private int caretIndex;
     private int charsPerLine = 1;
     private String debugStatement = "";
+    private boolean showError = false;
 
     public CalculatorInputTextView(Context context) {
         super(context);
         caretPaint = new Paint();
+        errorPaint = new Paint();
         init();
     }
 
     public CalculatorInputTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         caretPaint = new Paint();
+        errorPaint = new Paint();
         init();
     }
 
     public CalculatorInputTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         caretPaint = new Paint();
+        errorPaint = new Paint();
         init();
     }
 
     private void init() {
         caretPaint.setColor(Color.GRAY);
-        caretPaint.setStrokeWidth(3f);
+        caretPaint.setStrokeWidth(STROKE_WIDTH);
         lineHeight = getLineHeight();
         Paint textPaint = getPaint();
         charWidth = textPaint.measureText("1");
+        errorPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorError));
+        errorPaint.setStrokeWidth(STROKE_WIDTH);
+        errorPaint.setAntiAlias(true);
     }
 
     @Override
@@ -56,12 +71,26 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         final int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN ||
             action == MotionEvent.ACTION_MOVE) {
-                float x = event.getX();
-                float y = event.getY();
+            float x = event.getX();
+            float y = event.getY();
             updateCaretIndex(x, y);
+            clearSyntaxError();
             invalidate();
         }
         return true;
+    }
+
+    private static float[] getErrorChevrons(float x, int y) {
+        float[] adjustedChevron = new float[CHEVRON.length];
+        for (int i = 0; i < adjustedChevron.length; i++) {
+            if (i % 2 == 0) {
+                adjustedChevron[i] = CHEVRON[i] + x;
+            }
+            else {
+                adjustedChevron[i] = CHEVRON[i] + y;
+            }
+        }
+        return adjustedChevron;
     }
 
     private int textLength() {
@@ -93,7 +122,11 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
             float x = (caretIndex%charsPerLine)*charWidth + getPaddingStart();
             int y = (caretIndex/charsPerLine) * lineHeight + 4;
 
-            canvas.drawLine(x, y, x, y+lineHeight, caretPaint);
+            int stopY = y + lineHeight;
+            canvas.drawLine(x, y, x, stopY, caretPaint);
+            if (showError) {
+                canvas.drawLines(getErrorChevrons(x, stopY + 4), errorPaint);
+            }
         }
 
 //        canvas.drawText(debugStatement, 2, 10, caretPaint);
@@ -118,6 +151,17 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
                 caretIndex -= 1;
             }
         }
+    }
+
+    protected void setSyntaxError(int index) {
+        caretIndex = index;
+        showError = true;
+        invalidate();
+    }
+
+    protected void clearSyntaxError() {
+        showError = false;
+        invalidate();
     }
 
     public void clear() {

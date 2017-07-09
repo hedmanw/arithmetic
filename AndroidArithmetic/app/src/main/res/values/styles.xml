@@ -19,12 +19,15 @@
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
-    <style name="CalculatorText">
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">@dimen/calculator_text_size</item>
+    <style name="PaddedText">
         <item name="android:padding">6dp</item>
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingEnd">12dp</item>
+    </style>
+
+    <style name="CalculatorText" parent="PaddedText">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/calculator_text_size</item>
     </style>
 
 </resources>

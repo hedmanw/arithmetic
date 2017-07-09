@@ -15,6 +15,15 @@
         android:layout_weight="1"
         style="@style/CalculatorText" />
 
+    <se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorContainer
+        android:id="@+id/containerError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+    </se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorContainer>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

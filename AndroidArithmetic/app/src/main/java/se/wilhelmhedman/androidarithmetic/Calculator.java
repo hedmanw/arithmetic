@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import se.wilhelmhedman.androidarithmetic.calc.ArithmeticFacade;
 import se.wilhelmhedman.androidarithmetic.calc.IArithmeticQuery;
+import se.wilhelmhedman.androidarithmetic.calc.SyntaxErrorResponse;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorInputTextView;
+import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorNotificationFacade;
+import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorContainer;
 
 public class Calculator extends AppCompatActivity {
 
@@ -21,6 +24,8 @@ public class Calculator extends AppCompatActivity {
 
         final CalculatorInputTextView typingTextView = (CalculatorInputTextView) findViewById(R.id.textViewTyping);
         final TextView resultTextView = (TextView) findViewById(R.id.textViewAnswers);
+        final SyntaxErrorContainer errorContainer = (SyntaxErrorContainer) findViewById(R.id.containerError);
+        final SyntaxErrorNotificationFacade syntaxErrorNotificationFacade = new SyntaxErrorNotificationFacade(typingTextView, errorContainer);
 
         final int[] literalButtons = new int[] {
                 R.id.button0,
@@ -50,6 +55,7 @@ public class Calculator extends AppCompatActivity {
             public void onClick(View view) {
                 Button self = (Button) view;
                 typingTextView.addText(self.getText());
+                syntaxErrorNotificationFacade.clearSyntaxError();
             }
         };
 
@@ -65,6 +71,7 @@ public class Calculator extends AppCompatActivity {
                     resultTextView.setText("");
                 }
                 typingTextView.clear();
+                syntaxErrorNotificationFacade.clearSyntaxError();
             }
         });
 
@@ -72,6 +79,7 @@ public class Calculator extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 typingTextView.delete();
+                syntaxErrorNotificationFacade.clearSyntaxError();
             }
         });
 
@@ -81,9 +89,14 @@ public class Calculator extends AppCompatActivity {
                 CharSequence text = typingTextView.getText();
                 if (text.length() > 0) {
                     IArithmeticQuery response = ArithmeticFacade.execute(text.toString());
-                    resultTextView.setText(response.toString());
                     if (!response.hasErrors()) {
                         typingTextView.clear();
+                        resultTextView.setText(response.toString());
+                        syntaxErrorNotificationFacade.clearSyntaxError();
+                    }
+                    else {
+                        SyntaxErrorResponse errorResponse = (SyntaxErrorResponse) response;
+                        syntaxErrorNotificationFacade.setSyntaxError(errorResponse);
                     }
                 }
             }
