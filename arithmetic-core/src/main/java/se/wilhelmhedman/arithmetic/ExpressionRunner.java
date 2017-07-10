@@ -36,7 +36,7 @@ public class ExpressionRunner {
         ParseTreeWalker.DEFAULT.walk(listener, parser.root());
 
         List<ArithmeticErrorListener.SyntaxError> syntaxErrors = errorListener.getSyntaxErrors();
-        if (syntaxErrors.size() > 0) {
+        if (parser.getNumberOfSyntaxErrors() > 0) {
             ArithmeticErrorListener.SyntaxError syntaxError = syntaxErrors.get(0);
             throw new EvaluationException(syntaxError.getCharPositionInLine(), syntaxError.getMessage());
         }
