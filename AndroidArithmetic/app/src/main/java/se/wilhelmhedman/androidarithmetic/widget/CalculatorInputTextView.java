@@ -63,7 +63,8 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         // TODO: correct charsPerLine w.r.t. padding
-        charsPerLine = (int) Math.floor(getWidth()/charWidth);
+        int adjustedWidth = getWidth() - getPaddingStart() - getPaddingEnd();
+        charsPerLine = (int) (adjustedWidth/charWidth);
     }
 
     @Override
@@ -97,6 +98,11 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         return getText().length();
     }
 
+    private void setCaretIndex(int index) {
+        caretIndex = index;
+//        debugStatement = "CI=" + caretIndex + ",CPL=" + charsPerLine;
+    }
+
     private void updateCaretIndex(float x, float y) {
         int pressedLine = (int) (y / lineHeight);
         int pressedColumn = (int) (x / charWidth);
@@ -111,8 +117,8 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         else {
             optimisticIndex = Math.min(actualPressedIndex, textLength());
         }
-        caretIndex = Math.max(0, optimisticIndex);
-        debugStatement = "L=" + pressedLine + ",C=" + pressedColumn + ",API=" + actualPressedIndex + ",LCPL=" + optimisticIndex + ",CPL=" + charsPerLine;
+        setCaretIndex(Math.max(0, optimisticIndex));
+//        debugStatement = "L=" + pressedLine + ",C=" + pressedColumn + ",API=" + actualPressedIndex + ",LCPL=" + optimisticIndex + ",CPL=" + charsPerLine;
     }
 
     @Override
@@ -120,7 +126,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         super.onDraw(canvas);
         if (textLength() > 0) {
             float x = (caretIndex%charsPerLine)*charWidth + getPaddingStart();
-            int y = (caretIndex/charsPerLine) * lineHeight + 4;
+            int y = (caretIndex/charsPerLine) * lineHeight + 4 + getPaddingTop();
 
             int stopY = y + lineHeight;
             canvas.drawLine(x, y, x, stopY, caretPaint);
@@ -136,7 +142,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         CharSequence text = getText();
         String newText = text.subSequence(0, caretIndex).toString() + string + text.subSequence(caretIndex, text.length()).toString();
         setText(newText);
-        caretIndex += string.length();
+        setCaretIndex(caretIndex + string.length());
     }
 
     public void delete() {
@@ -148,13 +154,13 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
             else {
                 String newText = text.subSequence(0, caretIndex-1).toString() + text.subSequence(caretIndex, textLength()).toString();
                 setText(newText);
-                caretIndex -= 1;
+                setCaretIndex(caretIndex - 1);
             }
         }
     }
 
     protected void setSyntaxError(int index) {
-        caretIndex = index;
+        setCaretIndex(index);
         showError = true;
         invalidate();
     }
@@ -165,7 +171,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
     }
 
     public void clear() {
-        caretIndex = 0;
+        setCaretIndex(0);
         setText("");
     }
 }

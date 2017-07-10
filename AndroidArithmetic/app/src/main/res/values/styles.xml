@@ -25,6 +25,12 @@
         <item name="android:paddingEnd">12dp</item>
     </style>
 
+    <style name="MarginText">
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+    </style>
+
     <style name="CalculatorText" parent="PaddedText">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/calculator_text_size</item>
