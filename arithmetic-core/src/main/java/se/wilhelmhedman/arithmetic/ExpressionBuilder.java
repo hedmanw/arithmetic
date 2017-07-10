@@ -96,7 +96,7 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
         String text = ctx.getText();
-        if (text.equals("-")) {
+        if (text.equals("-") || text.equals("-<missing DIGIT>")) {
             arithmeticErrorListener.syntaxError(null, null, 0, ctx.getStart().getCharPositionInLine(), "Illegal number (-).", null);
         }
         else {

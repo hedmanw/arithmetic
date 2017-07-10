@@ -1,5 +1,5 @@
 grammar Arithmetic;
-// java -jar antlr4-4.5.3.jar /home/wilhelm/develop/arithmetic/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4
+// java -jar antlr4-4.5.3.jar /home/wilhelm/develop/arithmetic/arithmetic-core/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4
 @header {
     package se.wilhelmhedman.arithmetic.antlr;
 }

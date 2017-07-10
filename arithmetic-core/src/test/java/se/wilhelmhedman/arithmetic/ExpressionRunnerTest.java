@@ -85,6 +85,7 @@ public class ExpressionRunnerTest {
         assertThrown(new ExpressionRunner("50+"), 3);
         assertThrown(new ExpressionRunner("+"), 0);
         assertThrown(new ExpressionRunner("(-"), 2);
+        assertThrown(new ExpressionRunner("-"), 1);
     }
 
     private void assertThrown(ExpressionRunner er, int expected) {
