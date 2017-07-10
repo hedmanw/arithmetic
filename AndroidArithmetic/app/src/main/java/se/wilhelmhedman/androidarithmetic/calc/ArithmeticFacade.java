@@ -6,7 +6,7 @@ import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
 public class ArithmeticFacade {
     public static IArithmeticQuery execute(String input) {
         ArithmeticSyntaxTransformer ast = new ArithmeticSyntaxTransformer();
-        String preprocessed = ast.transform(input);
+        String preprocessed = ast.transformToArithmeticDSL(input);
         ExpressionRunner runner = new ExpressionRunner(preprocessed);
 
         IArithmeticQuery response;
@@ -15,7 +15,8 @@ public class ArithmeticFacade {
             response = new ParsedArithmeticResponse(input, result);
             CalculationRepository.addResponse(response);
         } catch (EvaluationException e) {
-            response = new SyntaxErrorResponse(input, e.getMessage(), e.getOffendingCharIndex());
+            String reverseTransformedErrorMessage = ast.transformFromArithmeticDSL(e.getMessage());
+            response = new SyntaxErrorResponse(input, reverseTransformedErrorMessage, e.getOffendingCharIndex());
         }
 
         return response;
