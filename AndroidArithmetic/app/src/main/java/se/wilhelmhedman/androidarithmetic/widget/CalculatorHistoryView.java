@@ -33,8 +33,8 @@ public class CalculatorHistoryView extends ViewGroup {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int count = getChildCount();
 
-        int maxWidth = getSuggestedMinimumWidth();
-        int maxHeight = getSuggestedMinimumHeight();
+        int maxWidth = 0;
+        int maxHeight = 0;
         int childState = 0;
 
         for (int i = count - 1; i >= 0; i--) {
@@ -44,8 +44,19 @@ public class CalculatorHistoryView extends ViewGroup {
                 measureChild(child, widthMeasureSpec, heightMeasureSpec);
 
                 childState = combineMeasuredStates(childState, child.getMeasuredState());
+
+                maxWidth = Math.max(maxWidth, child.getMeasuredWidth());
+//                maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
+                maxHeight += child.getMeasuredHeight();
+
             }
         }
+
+
+        maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
+        maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight()); // fit into allocated height
+
+        Log.d("ARITH", "OnMeasure dimensions: " + "MW=" + maxWidth + "MH=" + maxHeight);
 
         setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
                 resolveSizeAndState(maxHeight, heightMeasureSpec, childState << MEASURED_HEIGHT_STATE_SHIFT));
@@ -65,6 +76,7 @@ public class CalculatorHistoryView extends ViewGroup {
         final int bottomPos = bottom - top - getPaddingBottom();
 
         int bottomPlacement = bottomPos;
+        // TODO: Optimize! Stop drawing things that are outside.
         Log.d("ARITH", "My dimensions: " + "L=" + left + "T=" + top + "R=" + right + "B=" + bottom);
         for (int i = count - 1; i >= 0; i--) {
             final View child = getChildAt(i);
@@ -82,7 +94,7 @@ public class CalculatorHistoryView extends ViewGroup {
                 childPlacement.top = topPlacement;
                 childPlacement.bottom = bottomPlacement;
                 bottomPlacement = topPlacement;
-                Log.d("ARITH", "Child(" + i + "):" + childPlacement.toString());
+//                Log.d("ARITH", "Child(" + i + "):" + childPlacement.toString());
                 // Place the child.
                 child.layout(childPlacement.left, childPlacement.top, childPlacement.right, childPlacement.bottom);
             }
