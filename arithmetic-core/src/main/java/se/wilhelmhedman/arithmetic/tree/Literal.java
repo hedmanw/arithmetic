@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class Literal implements Evaluatable {
     private final BigDecimal value;
 
-    public Literal(String s) {
-        this.value = new BigDecimal(s);
+    public Literal(BigDecimal v) {
+        this.value = v;
     }
 
     @Override

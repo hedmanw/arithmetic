@@ -5,6 +5,7 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticErrorListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.*;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,9 +97,12 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
         String text = ctx.getText();
-        if (!text.equals("-") && !text.equals("-<missing DIGIT>")) {
-            Literal l = new Literal(text);
+        try {
+            BigDecimal bigDecimal = new BigDecimal(text);
+            Literal l = new Literal(bigDecimal);
             literals.put(ctx, l);
+        } catch (Exception e) {
+            arithmeticErrorListener.syntaxError(null, null, 0, ctx.getStart().getCharPositionInLine(), "Bad number: (" + text + ")", null);
         }
     }
 
