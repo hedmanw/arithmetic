@@ -14,7 +14,7 @@ import se.wilhelmhedman.androidarithmetic.calc.SyntaxErrorResponse;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorHistoryView;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorInputTextView;
 import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorNotificationFacade;
-import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorContainer;
+import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorTextView;
 
 public class Calculator extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class Calculator extends AppCompatActivity {
         setContentView(R.layout.activity_calculator);
 
         final CalculatorInputTextView typingTextView = (CalculatorInputTextView) findViewById(R.id.textViewTyping);
-        final SyntaxErrorContainer errorContainer = (SyntaxErrorContainer) findViewById(R.id.containerError);
+        final SyntaxErrorTextView errorContainer = (SyntaxErrorTextView) findViewById(R.id.containerError);
         final SyntaxErrorNotificationFacade syntaxErrorNotificationFacade = new SyntaxErrorNotificationFacade(typingTextView, errorContainer);
         final CalculatorHistoryView calculatorHistoryView = (CalculatorHistoryView) findViewById(android.R.id.list);
 

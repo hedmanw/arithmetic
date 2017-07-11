@@ -7,21 +7,30 @@
     android:orientation="vertical"
     tools:context="se.wilhelmhedman.androidarithmetic.Calculator">
 
-    <se.wilhelmhedman.androidarithmetic.widget.CalculatorHistoryView
-        android:id="@android:id/list"
+    <FrameLayout
+        android:id="@+id/calculatorTopLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-    </se.wilhelmhedman.androidarithmetic.widget.CalculatorHistoryView>
-
-    <se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorContainer
-        android:id="@+id/containerError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
-    </se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorContainer>
+        android:layout_weight="1">
+        <se.wilhelmhedman.androidarithmetic.widget.CalculatorHistoryView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </se.wilhelmhedman.androidarithmetic.widget.CalculatorHistoryView>
+        <se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorTextView
+            android:id="@+id/containerError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder"
+            style="@style/PaddedText"
+            android:background="@color/colorError"
+            android:textColor="@android:color/white"
+            android:layout_gravity="bottom"
+            android:translationY="30dp"
+            android:alpha="0">
+        </se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorTextView>
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"
