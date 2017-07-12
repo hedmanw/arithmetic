@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,7 +30,7 @@ public class History extends AppCompatActivity {
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             // Inflate a menu resource providing context menu items
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.history_menu, menu);
+            inflater.inflate(R.menu.history_context_menu, menu);
             return true;
         }
 
@@ -63,6 +62,9 @@ public class History extends AppCompatActivity {
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
+            if (selectedIndex > -1) {
+                unselectCurrent();
+            }
         }
     };
     private ListView viewContainer;
@@ -80,6 +82,16 @@ public class History extends AppCompatActivity {
         adapter = new StableArrayAdapter<>(this, R.layout.list_item_history, list);
         viewContainer.setAdapter(adapter);
 
+        viewContainer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (actionMode != null && selectedIndex > -1) {
+                    unselectCurrent();
+                    view.setSelected(true);
+                }
+            }
+        });
+
         viewContainer.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -88,7 +100,7 @@ public class History extends AppCompatActivity {
                 }
 
                 if (selectedIndex > -1) {
-                    viewContainer.getChildAt(selectedIndex).setSelected(false);
+                    unselectCurrent();
                 }
                 view.setSelected(true);
                 selectedIndex = i;
@@ -96,6 +108,10 @@ public class History extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void unselectCurrent() {
+        viewContainer.getChildAt(selectedIndex).setSelected(false);
     }
 
     private void actionRedo() {

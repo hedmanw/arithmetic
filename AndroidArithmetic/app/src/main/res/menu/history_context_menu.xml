@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/menu_hist_ans"
-        android:enabled="false"
         android:title="Ans"
         app:showAsAction="ifRoom" />
     <item
@@ -14,5 +13,6 @@
     <item
         android:id="@+id/menu_hist_copy"
         android:title="Copy"
+        android:enabled="false"
         app:showAsAction="ifRoom" />
 </menu>
