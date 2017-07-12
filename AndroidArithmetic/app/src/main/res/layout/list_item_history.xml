@@ -8,5 +8,6 @@
         style="@style/CalculatorText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/placeholder"/>
+        android:text="@string/placeholder"
+        android:background="@drawable/selectable_item"/>
 </LinearLayout>

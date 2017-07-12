@@ -40,6 +40,10 @@ public class StableArrayAdapter<T> extends ArrayAdapter<T> {
         return position;
     }
 
+    public T getItemByIndex(int index) {
+        return items.get(index);
+    }
+
     @Override
     public boolean hasStableIds() {
         return true;

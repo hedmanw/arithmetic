@@ -141,7 +141,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
     public void addText(CharSequence string) {
         CharSequence text = getText();
         String newText = text.subSequence(0, caretIndex).toString() + string + text.subSequence(caretIndex, text.length()).toString();
-        setText(newText);
+        super.setText(newText);
         setCaretIndex(caretIndex + string.length());
     }
 
@@ -149,11 +149,11 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         if (textLength() > 0) {
             CharSequence text = getText();
             if (caretIndex == 0) {
-                setText(text.subSequence(1, text.length()));
+                super.setText(text.subSequence(1, text.length()));
             }
             else {
                 String newText = text.subSequence(0, caretIndex-1).toString() + text.subSequence(caretIndex, textLength()).toString();
-                setText(newText);
+                super.setText(newText);
                 setCaretIndex(caretIndex - 1);
             }
         }
@@ -171,7 +171,11 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
     }
 
     public void clear() {
-        setCaretIndex(0);
         setText("");
+    }
+
+    public void setText(String string) {
+        super.setText(string);
+        setCaretIndex(string.length());
     }
 }

@@ -1,6 +1,7 @@
 package se.wilhelmhedman.androidarithmetic;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +18,14 @@ import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorNotificationFacade;
 import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorTextView;
 
 public class Calculator extends AppCompatActivity {
+    private CalculatorInputTextView typingTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
-        final CalculatorInputTextView typingTextView = (CalculatorInputTextView) findViewById(R.id.textViewTyping);
+        typingTextView = (CalculatorInputTextView) findViewById(R.id.textViewTyping);
         final SyntaxErrorTextView errorContainer = (SyntaxErrorTextView) findViewById(R.id.containerError);
         final SyntaxErrorNotificationFacade syntaxErrorNotificationFacade = new SyntaxErrorNotificationFacade(typingTextView, errorContainer);
         final CalculatorHistoryView calculatorHistoryView = (CalculatorHistoryView) findViewById(android.R.id.list);
@@ -109,8 +111,28 @@ public class Calculator extends AppCompatActivity {
             public void onClick(View view) {
                 Intent startHistory = new Intent(getBaseContext(), History.class);
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-                startActivity(startHistory, options.toBundle());
+                ActivityCompat.startActivityForResult(Calculator.this, startHistory, 0, options.toBundle());
             }
         });
+
+//        ArithmeticFacade.execute("1+2+3");
+//        ArithmeticFacade.execute("5*6*7");
+    }
+
+    private void redo(String value) {
+        typingTextView.setText(value);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 0:
+                if (resultCode == History.RESULT_REDO) {
+                    String returnValue = data.getStringExtra("content");
+                    redo(returnValue);
+                }
+                break;
+        }
     }
 }
