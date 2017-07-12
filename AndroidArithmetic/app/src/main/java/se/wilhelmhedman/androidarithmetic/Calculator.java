@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import se.wilhelmhedman.androidarithmetic.calc.ArithmeticFacade;
 import se.wilhelmhedman.androidarithmetic.calc.IArithmeticQuery;
 import se.wilhelmhedman.androidarithmetic.calc.SyntaxErrorResponse;
@@ -18,6 +21,33 @@ import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorNotificationFacade;
 import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorTextView;
 
 public class Calculator extends AppCompatActivity {
+    private static final int[] LITERAL_BUTTONS = new int[] {
+            R.id.button0,
+            R.id.button1,
+            R.id.button2,
+            R.id.button3,
+            R.id.button4,
+            R.id.button5,
+            R.id.button6,
+            R.id.button7,
+            R.id.button8,
+            R.id.button9,
+            R.id.buttonAdd,
+            R.id.buttonSub,
+            R.id.buttonMul,
+            R.id.buttonDiv,
+            R.id.buttonPow,
+            R.id.buttonDecimal,
+            R.id.buttonRParen,
+            R.id.buttonLParen,
+            R.id.buttonSquare,
+    };
+    private static final Map<Integer, String> SPECIAL_BUTTON_ACTIONS = new HashMap<Integer, String>() {{
+        put(R.id.buttonSin, "sin(");
+        put(R.id.buttonCos, "cos(");
+        put(R.id.buttonTan, "tan(");
+    }};
+
     private CalculatorInputTextView typingTextView;
 
     @Override
@@ -30,30 +60,6 @@ public class Calculator extends AppCompatActivity {
         final SyntaxErrorNotificationFacade syntaxErrorNotificationFacade = new SyntaxErrorNotificationFacade(typingTextView, errorContainer);
         final CalculatorHistoryView calculatorHistoryView = (CalculatorHistoryView) findViewById(android.R.id.list);
 
-
-        final int[] literalButtons = new int[] {
-                R.id.button0,
-                R.id.button1,
-                R.id.button2,
-                R.id.button3,
-                R.id.button4,
-                R.id.button5,
-                R.id.button6,
-                R.id.button7,
-                R.id.button8,
-                R.id.button9,
-                R.id.buttonAdd,
-                R.id.buttonSub,
-                R.id.buttonMul,
-                R.id.buttonDiv,
-                R.id.buttonPow,
-                R.id.buttonDecimal,
-                R.id.buttonRParen,
-                R.id.buttonLParen,
-                R.id.buttonSquare,
-
-        };
-
         final View.OnClickListener literalButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,8 +69,20 @@ public class Calculator extends AppCompatActivity {
             }
         };
 
-        for (int i: literalButtons) {
+        for (int i: LITERAL_BUTTONS) {
             findViewById(i).setOnClickListener(literalButtonListener);
+        }
+
+        final View.OnClickListener specialButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                typingTextView.addText(SPECIAL_BUTTON_ACTIONS.get(view.getId()));
+                syntaxErrorNotificationFacade.clearSyntaxError();
+            }
+        };
+
+        for (int i: SPECIAL_BUTTON_ACTIONS.keySet()) {
+            findViewById(i).setOnClickListener(specialButtonListener);
         }
 
         findViewById(R.id.buttonAc).setOnClickListener(new View.OnClickListener() {

@@ -112,30 +112,30 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttonA"
+                android:id="@+id/buttonSin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                style="@style/Buttons.Disabled"
+                style="@style/Buttons"
                 android:text="sin" />
 
             <Button
-                android:id="@+id/buttonB"
+                android:id="@+id/buttonCos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                style="@style/Buttons.Disabled"
+                style="@style/Buttons"
                 android:text="cos" />
 
             <Button
-                android:id="@+id/buttonC"
+                android:id="@+id/buttonTan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                style="@style/Buttons.Disabled"
+                style="@style/Buttons"
                 android:text="tan" />
 
             <Button
