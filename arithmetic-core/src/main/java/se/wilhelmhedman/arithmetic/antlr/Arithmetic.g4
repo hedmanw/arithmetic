@@ -14,7 +14,10 @@ term:
       term (TIMES | DIV) factor #twoTerm
     | factor #singleTerm
     ;
-factor: atom (POW atom)*;
+factor:
+      atom (POW atom)* #powerFactor
+    | (SIN | COS | TAN) atom #functionFactor
+    ;
 atom:
       number #singleAtom
     | LPAREN expression RPAREN #parenthesizedExpression
@@ -29,5 +32,8 @@ TIMES: '*';
 DIV: '/';
 POINT: '.';
 POW: '^';
+SIN: 'sin';
+COS: 'cos';
+TAN: 'tan';
 DIGIT: ('0' .. '9');
 WS: [ \r\n\t] -> channel (HIDDEN);

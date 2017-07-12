@@ -1,4 +1,4 @@
-// Generated from /home/wilhelm/develop/arithmetic/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4 by ANTLR 4.5.3
+// Generated from /home/wilhelm/develop/arithmetic/arithmetic-core/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4 by ANTLR 4.5.3
 
     package se.wilhelmhedman.arithmetic.antlr;
 
@@ -68,15 +68,29 @@ public interface ArithmeticListener extends ParseTreeListener {
 	 */
 	void exitTwoTerm(ArithmeticParser.TwoTermContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ArithmeticParser#factor}.
+	 * Enter a parse tree produced by the {@code powerFactor}
+	 * labeled alternative in {@link ArithmeticParser#factor}.
 	 * @param ctx the parse tree
 	 */
-	void enterFactor(ArithmeticParser.FactorContext ctx);
+	void enterPowerFactor(ArithmeticParser.PowerFactorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ArithmeticParser#factor}.
+	 * Exit a parse tree produced by the {@code powerFactor}
+	 * labeled alternative in {@link ArithmeticParser#factor}.
 	 * @param ctx the parse tree
 	 */
-	void exitFactor(ArithmeticParser.FactorContext ctx);
+	void exitPowerFactor(ArithmeticParser.PowerFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code functionFactor}
+	 * labeled alternative in {@link ArithmeticParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionFactor(ArithmeticParser.FunctionFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functionFactor}
+	 * labeled alternative in {@link ArithmeticParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionFactor(ArithmeticParser.FunctionFactorContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code singleAtom}
 	 * labeled alternative in {@link ArithmeticParser#atom}.

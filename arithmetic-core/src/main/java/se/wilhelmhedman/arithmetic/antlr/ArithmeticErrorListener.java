@@ -25,19 +25,19 @@ public class ArithmeticErrorListener implements ANTLRErrorListener {
 
     @Override
     public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean b, BitSet bitSet, ATNConfigSet atnConfigSet) {
-        System.out.println("hello");
+        System.out.println("ambiguity");
 
     }
 
     @Override
     public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitSet, ATNConfigSet atnConfigSet) {
-        System.out.println("hello");
+        System.out.println("context");
 
     }
 
     @Override
     public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atnConfigSet) {
-        System.out.println("hello");
+        System.out.println("sensitivity");
 
     }
 

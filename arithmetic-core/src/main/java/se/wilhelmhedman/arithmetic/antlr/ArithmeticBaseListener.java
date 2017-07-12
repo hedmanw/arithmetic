@@ -1,4 +1,4 @@
-// Generated from /home/wilhelm/develop/arithmetic/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4 by ANTLR 4.5.3
+// Generated from /home/wilhelm/develop/arithmetic/arithmetic-core/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4 by ANTLR 4.5.3
 
     package se.wilhelmhedman.arithmetic.antlr;
 
@@ -78,13 +78,25 @@ public class ArithmeticBaseListener implements ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactor(ArithmeticParser.FactorContext ctx) { }
+	@Override public void enterPowerFactor(ArithmeticParser.PowerFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFactor(ArithmeticParser.FactorContext ctx) { }
+	@Override public void exitPowerFactor(ArithmeticParser.PowerFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionFactor(ArithmeticParser.FunctionFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionFactor(ArithmeticParser.FunctionFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

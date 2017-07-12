@@ -65,21 +65,37 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     }
 
     @Override
-    public void exitFactor(ArithmeticParser.FactorContext ctx) {
-        Factor rootFactor;
+    public void exitPowerFactor(ArithmeticParser.PowerFactorContext ctx) {
+        PowerFactor rootFactor;
         List<ArithmeticParser.AtomContext> atomsInFactor = ctx.atom();
         if (atomsInFactor.size() == 1) {
-            rootFactor = new Factor(atoms.get(ctx.atom(0)));
+            rootFactor = new PowerFactor(atoms.get(ctx.atom(0)));
         }
         else {
-            Factor lastFactor = new Factor(atoms.get(atomsInFactor.get(atomsInFactor.size()-1)));
+            PowerFactor lastFactor = new PowerFactor(atoms.get(atomsInFactor.get(atomsInFactor.size()-1)));
             for (int i = atomsInFactor.size() - 2; i >= 0; i--) {
-                Factor factor = new Factor(atoms.get(atomsInFactor.get(i)), lastFactor);
+                PowerFactor factor = new PowerFactor(atoms.get(atomsInFactor.get(i)), lastFactor);
                 lastFactor = factor;
             }
             rootFactor = lastFactor;
         }
         factors.put(ctx, rootFactor);
+    }
+
+    @Override
+    public void exitFunctionFactor(ArithmeticParser.FunctionFactorContext ctx) {
+        FunctionAtom atom = null;
+        Atom functionArgument = atoms.get(ctx.atom());
+        if (ctx.SIN() != null) {
+            atom = new FunctionAtom.SinFunction(functionArgument);
+        }
+        else if (ctx.COS() != null) {
+            atom = new FunctionAtom.CosFunction(functionArgument);
+        }
+        else if (ctx.TAN() != null){
+            atom = new FunctionAtom.TanFunction(functionArgument);
+        }
+        factors.put(ctx, atom);
     }
 
     @Override

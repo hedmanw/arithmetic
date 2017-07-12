@@ -29,6 +29,8 @@ public class ExpressionRunnerTest {
             put("10^2*2", "10^[2]*[2]");
             put("(2*2)+2", "(2*[2])+[2]");
             put("2*(2+2)", "2*[(2+[2])]");
+            put("sin(90)", "sin[(90)]");
+            put("sin(45*2)", "sin[(45*[2])]");
         }};
 
         for (String key: input.keySet()) {
@@ -78,6 +80,12 @@ public class ExpressionRunnerTest {
 
         er = new ExpressionRunner("0.0001*0.5");
         assertEquals("0.00005", er.evaluate());
+
+        er = new ExpressionRunner("sin(90)");
+        assertEquals("1", er.evaluate());
+
+        er = new ExpressionRunner("sin(45+45)");
+        assertEquals("1", er.evaluate());
     }
 
     @Test
@@ -88,6 +96,7 @@ public class ExpressionRunnerTest {
         assertThrown(new ExpressionRunner("-"), 1);
         assertThrown(new ExpressionRunner("-("), 1);
         assertThrown(new ExpressionRunner("-^2"), 1);
+        assertThrown(new ExpressionRunner("sin"), 3);
     }
 
     private void assertThrown(ExpressionRunner er, int expected) {

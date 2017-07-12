@@ -1,4 +1,4 @@
-// Generated from /home/wilhelm/develop/arithmetic/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4 by ANTLR 4.5.3
+// Generated from /home/wilhelm/develop/arithmetic/arithmetic-core/src/main/java/se/wilhelmhedman/arithmetic/antlr/Arithmetic.g4 by ANTLR 4.5.3
 
     package se.wilhelmhedman.arithmetic.antlr;
 
@@ -19,8 +19,8 @@ public class ArithmeticParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		LPAREN=1, RPAREN=2, PLUS=3, MINUS=4, TIMES=5, DIV=6, POINT=7, POW=8, DIGIT=9, 
-		WS=10;
+		LPAREN=1, RPAREN=2, PLUS=3, MINUS=4, TIMES=5, DIV=6, POINT=7, POW=8, SIN=9, 
+		COS=10, TAN=11, DIGIT=12, WS=13;
 	public static final int
 		RULE_root = 0, RULE_expression = 1, RULE_term = 2, RULE_factor = 3, RULE_atom = 4, 
 		RULE_number = 5;
@@ -29,11 +29,12 @@ public class ArithmeticParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'('", "')'", "'+'", "'-'", "'*'", "'/'", "'.'", "'^'"
+		null, "'('", "')'", "'+'", "'-'", "'*'", "'/'", "'.'", "'^'", "'sin'", 
+		"'cos'", "'tan'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "LPAREN", "RPAREN", "PLUS", "MINUS", "TIMES", "DIV", "POINT", "POW", 
-		"DIGIT", "WS"
+		"SIN", "COS", "TAN", "DIGIT", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -348,6 +349,17 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static class FactorContext extends ParserRuleContext {
+		public FactorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_factor; }
+	 
+		public FactorContext() { }
+		public void copyFrom(FactorContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class PowerFactorContext extends FactorContext {
 		public List<AtomContext> atom() {
 			return getRuleContexts(AtomContext.class);
 		}
@@ -358,47 +370,89 @@ public class ArithmeticParser extends Parser {
 		public TerminalNode POW(int i) {
 			return getToken(ArithmeticParser.POW, i);
 		}
-		public FactorContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_factor; }
+		public PowerFactorContext(FactorContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterFactor(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterPowerFactor(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitFactor(this);
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitPowerFactor(this);
+		}
+	}
+	public static class FunctionFactorContext extends FactorContext {
+		public AtomContext atom() {
+			return getRuleContext(AtomContext.class,0);
+		}
+		public TerminalNode SIN() { return getToken(ArithmeticParser.SIN, 0); }
+		public TerminalNode COS() { return getToken(ArithmeticParser.COS, 0); }
+		public TerminalNode TAN() { return getToken(ArithmeticParser.TAN, 0); }
+		public FunctionFactorContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).enterFunctionFactor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ArithmeticListener ) ((ArithmeticListener)listener).exitFunctionFactor(this);
 		}
 	}
 
 	public final FactorContext factor() throws RecognitionException {
 		FactorContext _localctx = new FactorContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_factor);
+		int _la;
 		try {
 			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(36);
-			atom();
-			setState(41);
-			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					setState(37);
-					match(POW);
-					setState(38);
-					atom();
-					}
-					} 
-				}
-				setState(43);
+			setState(46);
+			switch (_input.LA(1)) {
+			case LPAREN:
+			case MINUS:
+			case DIGIT:
+				_localctx = new PowerFactorContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(36);
+				atom();
+				setState(41);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-			}
+				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1 ) {
+						{
+						{
+						setState(37);
+						match(POW);
+						setState(38);
+						atom();
+						}
+						} 
+					}
+					setState(43);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				}
+				}
+				break;
+			case SIN:
+			case COS:
+			case TAN:
+				_localctx = new FunctionFactorContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(44);
+				_la = _input.LA(1);
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << SIN) | (1L << COS) | (1L << TAN))) != 0)) ) {
+				_errHandler.recoverInline(this);
+				} else {
+					consume();
+				}
+				setState(45);
+				atom();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -458,14 +512,14 @@ public class ArithmeticParser extends Parser {
 		AtomContext _localctx = new AtomContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_atom);
 		try {
-			setState(49);
+			setState(53);
 			switch (_input.LA(1)) {
 			case MINUS:
 			case DIGIT:
 				_localctx = new SingleAtomContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(44);
+				setState(48);
 				number();
 				}
 				break;
@@ -473,11 +527,11 @@ public class ArithmeticParser extends Parser {
 				_localctx = new ParenthesizedExpressionContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(45);
+				setState(49);
 				match(LPAREN);
-				setState(46);
+				setState(50);
 				expression(0);
-				setState(47);
+				setState(51);
 				match(RPAREN);
 				}
 				break;
@@ -525,16 +579,16 @@ public class ArithmeticParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(52);
+			setState(56);
 			_la = _input.LA(1);
 			if (_la==MINUS) {
 				{
-				setState(51);
+				setState(55);
 				match(MINUS);
 				}
 			}
 
-			setState(55); 
+			setState(59); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -542,7 +596,7 @@ public class ArithmeticParser extends Parser {
 				case 1:
 					{
 					{
-					setState(54);
+					setState(58);
 					match(DIGIT);
 					}
 					}
@@ -550,32 +604,32 @@ public class ArithmeticParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(57); 
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-			setState(66);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
-			case 1:
-				{
-				setState(59);
-				match(POINT);
-				setState(63);
+				setState(61); 
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+			setState(70);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			case 1:
+				{
+				setState(63);
+				match(POINT);
+				setState(67);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(60);
+						setState(64);
 						match(DIGIT);
 						}
 						} 
 					}
-					setState(65);
+					setState(69);
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 				}
 				}
 				break;
@@ -618,25 +672,26 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\fG\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\17K\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3"+
 		"\27\n\3\f\3\16\3\32\13\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4\"\n\4\f\4\16\4%\13"+
-		"\4\3\5\3\5\3\5\7\5*\n\5\f\5\16\5-\13\5\3\6\3\6\3\6\3\6\3\6\5\6\64\n\6"+
-		"\3\7\5\7\67\n\7\3\7\6\7:\n\7\r\7\16\7;\3\7\3\7\7\7@\n\7\f\7\16\7C\13\7"+
-		"\5\7E\n\7\3\7\2\4\4\6\b\2\4\6\b\n\f\2\4\3\2\5\6\3\2\7\bH\2\16\3\2\2\2"+
-		"\4\20\3\2\2\2\6\33\3\2\2\2\b&\3\2\2\2\n\63\3\2\2\2\f\66\3\2\2\2\16\17"+
-		"\5\4\3\2\17\3\3\2\2\2\20\21\b\3\1\2\21\22\5\6\4\2\22\30\3\2\2\2\23\24"+
-		"\f\4\2\2\24\25\t\2\2\2\25\27\5\6\4\2\26\23\3\2\2\2\27\32\3\2\2\2\30\26"+
-		"\3\2\2\2\30\31\3\2\2\2\31\5\3\2\2\2\32\30\3\2\2\2\33\34\b\4\1\2\34\35"+
-		"\5\b\5\2\35#\3\2\2\2\36\37\f\4\2\2\37 \t\3\2\2 \"\5\b\5\2!\36\3\2\2\2"+
-		"\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\7\3\2\2\2%#\3\2\2\2&+\5\n\6\2\'(\7\n"+
-		"\2\2(*\5\n\6\2)\'\3\2\2\2*-\3\2\2\2+)\3\2\2\2+,\3\2\2\2,\t\3\2\2\2-+\3"+
-		"\2\2\2.\64\5\f\7\2/\60\7\3\2\2\60\61\5\4\3\2\61\62\7\4\2\2\62\64\3\2\2"+
-		"\2\63.\3\2\2\2\63/\3\2\2\2\64\13\3\2\2\2\65\67\7\6\2\2\66\65\3\2\2\2\66"+
-		"\67\3\2\2\2\679\3\2\2\28:\7\13\2\298\3\2\2\2:;\3\2\2\2;9\3\2\2\2;<\3\2"+
-		"\2\2<D\3\2\2\2=A\7\t\2\2>@\7\13\2\2?>\3\2\2\2@C\3\2\2\2A?\3\2\2\2AB\3"+
-		"\2\2\2BE\3\2\2\2CA\3\2\2\2D=\3\2\2\2DE\3\2\2\2E\r\3\2\2\2\n\30#+\63\66"+
-		";AD";
+		"\4\3\5\3\5\3\5\7\5*\n\5\f\5\16\5-\13\5\3\5\3\5\5\5\61\n\5\3\6\3\6\3\6"+
+		"\3\6\3\6\5\68\n\6\3\7\5\7;\n\7\3\7\6\7>\n\7\r\7\16\7?\3\7\3\7\7\7D\n\7"+
+		"\f\7\16\7G\13\7\5\7I\n\7\3\7\2\4\4\6\b\2\4\6\b\n\f\2\5\3\2\5\6\3\2\7\b"+
+		"\3\2\13\rM\2\16\3\2\2\2\4\20\3\2\2\2\6\33\3\2\2\2\b\60\3\2\2\2\n\67\3"+
+		"\2\2\2\f:\3\2\2\2\16\17\5\4\3\2\17\3\3\2\2\2\20\21\b\3\1\2\21\22\5\6\4"+
+		"\2\22\30\3\2\2\2\23\24\f\4\2\2\24\25\t\2\2\2\25\27\5\6\4\2\26\23\3\2\2"+
+		"\2\27\32\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\5\3\2\2\2\32\30\3\2\2"+
+		"\2\33\34\b\4\1\2\34\35\5\b\5\2\35#\3\2\2\2\36\37\f\4\2\2\37 \t\3\2\2 "+
+		"\"\5\b\5\2!\36\3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\7\3\2\2\2%#\3\2"+
+		"\2\2&+\5\n\6\2\'(\7\n\2\2(*\5\n\6\2)\'\3\2\2\2*-\3\2\2\2+)\3\2\2\2+,\3"+
+		"\2\2\2,\61\3\2\2\2-+\3\2\2\2./\t\4\2\2/\61\5\n\6\2\60&\3\2\2\2\60.\3\2"+
+		"\2\2\61\t\3\2\2\2\628\5\f\7\2\63\64\7\3\2\2\64\65\5\4\3\2\65\66\7\4\2"+
+		"\2\668\3\2\2\2\67\62\3\2\2\2\67\63\3\2\2\28\13\3\2\2\29;\7\6\2\2:9\3\2"+
+		"\2\2:;\3\2\2\2;=\3\2\2\2<>\7\16\2\2=<\3\2\2\2>?\3\2\2\2?=\3\2\2\2?@\3"+
+		"\2\2\2@H\3\2\2\2AE\7\t\2\2BD\7\16\2\2CB\3\2\2\2DG\3\2\2\2EC\3\2\2\2EF"+
+		"\3\2\2\2FI\3\2\2\2GE\3\2\2\2HA\3\2\2\2HI\3\2\2\2I\r\3\2\2\2\13\30#+\60"+
+		"\67:?EH";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
