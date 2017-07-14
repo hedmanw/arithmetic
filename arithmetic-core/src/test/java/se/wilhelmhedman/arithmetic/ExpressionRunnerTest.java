@@ -78,13 +78,25 @@ public class ExpressionRunnerTest {
         er = new ExpressionRunner("250000*5");
         assertEquals("1.25E+6", er.evaluate());
 
+        er = new ExpressionRunner("250000*250");
+        assertEquals("6.25E+7", er.evaluate());
+
         er = new ExpressionRunner("0.0001*0.5");
         assertEquals("0.00005", er.evaluate());
+
+        er = new ExpressionRunner("1/3");
+        assertEquals("0.33333", er.evaluate());
 
         er = new ExpressionRunner("sin(90)");
         assertEquals("1", er.evaluate());
 
         er = new ExpressionRunner("sin(45+45)");
+        assertEquals("1", er.evaluate());
+
+        er = new ExpressionRunner("cos(90)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(0)");
         assertEquals("1", er.evaluate());
     }
 

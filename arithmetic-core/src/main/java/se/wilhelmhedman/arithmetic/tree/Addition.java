@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 
@@ -15,6 +17,6 @@ public class Addition extends Expression {
 
     @Override
     public BigDecimal evaluate() {
-        return getLeft().evaluate().add(getRight().evaluate(), MathContext.DECIMAL64);
+        return getLeft().evaluate().add(getRight().evaluate(), EvaluationContext.DEFAULT_CONTEXT);
     }
 }

@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticErrorListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticLexer;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
@@ -14,7 +15,8 @@ import java.math.MathContext;
 import java.util.List;
 
 public class ExpressionRunner {
-    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000, MathContext.DECIMAL64);
+    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000, EvaluationContext.DEFAULT_CONTEXT);
+    public static final BigDecimal ONE_MILLIONTH = BigDecimal.ONE.divide(ONE_MILLION, EvaluationContext.DEFAULT_CONTEXT);
     private final String input;
 
     public ExpressionRunner(String input) {
@@ -46,10 +48,10 @@ public class ExpressionRunner {
 
     public String evaluate() throws EvaluationException {
         Expression rootExp = getRoot();
-        BigDecimal result = rootExp.evaluate().stripTrailingZeros();
+        BigDecimal result = rootExp.evaluate().setScale(EvaluationContext.DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
 
         String resultString;
-        if (result.abs(MathContext.DECIMAL64).compareTo(ONE_MILLION) >= 0) {
+        if (result.abs(EvaluationContext.DEFAULT_CONTEXT).compareTo(ONE_MILLION) >= 0 || result.abs(EvaluationContext.DEFAULT_CONTEXT).compareTo(ONE_MILLIONTH) <= 0) {
             resultString = result.toString();
         }
         else {
