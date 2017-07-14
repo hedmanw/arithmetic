@@ -59,4 +59,8 @@ public class ExpressionRunner {
         }
         return resultString;
     }
+
+    public String getInput() {
+        return input;
+    }
 }

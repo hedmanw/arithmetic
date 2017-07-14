@@ -101,6 +101,24 @@ public class ExpressionRunnerTest {
     }
 
     @Test
+    public void identities() throws Exception {
+        Map<String, String> input = new HashMap<String, String>() {{
+            put("(2+2)-2", "2");
+            put("2+(2-2)", "2");
+            put("(500*500)/500", "500");
+            put("1000*(1000/1000)", "1000");
+            put("(4^2)^(1/2)", "4");
+            put("(16^3)^(1/3)", "16");
+        }};
+
+        for (String key: input.keySet()) {
+            ExpressionRunner er = new ExpressionRunner(key);
+            String actual = er.evaluate();
+            assertEquals("Failure for " + key, input.get(key), actual);
+        }
+    }
+
+    @Test
     public void syntaxErrors() throws Exception {
         assertThrown(new ExpressionRunner("50+"), 3);
         assertThrown(new ExpressionRunner("+"), 0);
@@ -114,7 +132,7 @@ public class ExpressionRunnerTest {
     private void assertThrown(ExpressionRunner er, int expected) {
         try {
             er.evaluate();
-            fail();
+            fail("Failure for " + er.getInput());
         } catch (EvaluationException e) {
             assertEquals(expected, e.getOffendingCharIndex());
         }
