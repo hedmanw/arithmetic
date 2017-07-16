@@ -16,7 +16,7 @@ term:
     ;
 factor:
       atom (POW atom)* #powerFactor
-    | (SIN | COS | TAN) atom #functionFactor
+    | (SIN | COS | TAN | LN | LOG) atom #functionFactor
     ;
 atom:
       number #singleAtom
@@ -35,5 +35,7 @@ POW: '^';
 SIN: 'sin';
 COS: 'cos';
 TAN: 'tan';
+LN: 'ln';
+LOG: 'log';
 DIGIT: ('0' .. '9');
 WS: [ \r\n\t] -> channel (HIDDEN);

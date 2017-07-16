@@ -84,16 +84,22 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
 
     @Override
     public void exitFunctionFactor(ArithmeticParser.FunctionFactorContext ctx) {
-        FunctionAtom atom = null;
+        FunctionFactor atom = null;
         Atom functionArgument = atoms.get(ctx.atom());
         if (ctx.SIN() != null) {
-            atom = new FunctionAtom.SinFunction(functionArgument);
+            atom = new FunctionFactor.SinFunction(functionArgument);
         }
         else if (ctx.COS() != null) {
-            atom = new FunctionAtom.CosFunction(functionArgument);
+            atom = new FunctionFactor.CosFunction(functionArgument);
         }
         else if (ctx.TAN() != null){
-            atom = new FunctionAtom.TanFunction(functionArgument);
+            atom = new FunctionFactor.TanFunction(functionArgument);
+        }
+        else if (ctx.LN() != null) {
+            atom = new FunctionFactor.LnFunction(functionArgument);
+        }
+        else if (ctx.LOG() != null) {
+            atom = new FunctionFactor.LogFunction(functionArgument);
         }
         factors.put(ctx, atom);
     }

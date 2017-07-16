@@ -98,6 +98,12 @@ public class ExpressionRunnerTest {
 
         er = new ExpressionRunner("cos(0)");
         assertEquals("1", er.evaluate());
+
+        er = new ExpressionRunner("ln(2.718281828459045)");
+        assertEquals("1", er.evaluate());
+
+        er = new ExpressionRunner("log(10^10)");
+        assertEquals("10", er.evaluate());
     }
 
     @Test
@@ -109,6 +115,7 @@ public class ExpressionRunnerTest {
             put("1000*(1000/1000)", "1000");
             put("(4^2)^(1/2)", "4");
             put("(16^3)^(1/3)", "16");
+            put("log(10^10)", "10");
         }};
 
         for (String key: input.keySet()) {
