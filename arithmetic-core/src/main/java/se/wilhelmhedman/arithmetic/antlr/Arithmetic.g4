@@ -21,6 +21,7 @@ factor:
 atom:
       number #singleAtom
     | LPAREN expression RPAREN #parenthesizedExpression
+    | (PI | E) #constantAtom
     ;
 number: MINUS? DIGIT+ (POINT DIGIT*)?;
 
@@ -37,5 +38,7 @@ COS: 'cos';
 TAN: 'tan';
 LN: 'ln';
 LOG: 'log';
+PI: 'pi';
+E: 'e';
 DIGIT: ('0' .. '9');
 WS: [ \r\n\t] -> channel (HIDDEN);

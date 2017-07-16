@@ -117,6 +117,18 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
     }
 
     @Override
+    public void exitConstantAtom(ArithmeticParser.ConstantAtomContext ctx) {
+        Atom atom = null;
+        if (ctx.PI() != null) {
+            atom = ConstantAtom.PI;
+        }
+        else if (ctx.E() != null) {
+            atom = ConstantAtom.E;
+        }
+        atoms.put(ctx, atom);
+    }
+
+    @Override
     public void exitNumber(ArithmeticParser.NumberContext ctx) {
         String text = ctx.getText();
         try {

@@ -31,6 +31,7 @@ public class ExpressionRunnerTest {
             put("2*(2+2)", "2*[(2+[2])]");
             put("sin(90)", "sin[(90)]");
             put("sin(45*2)", "sin[(45*[2])]");
+            put("pi/pi", "pi/[pi]");
         }};
 
         for (String key: input.keySet()) {
@@ -104,6 +105,9 @@ public class ExpressionRunnerTest {
 
         er = new ExpressionRunner("log(10^10)");
         assertEquals("10", er.evaluate());
+
+        er = new ExpressionRunner("ln(e^2)");
+        assertEquals("2", er.evaluate());
     }
 
     @Test
@@ -115,6 +119,7 @@ public class ExpressionRunnerTest {
             put("1000*(1000/1000)", "1000");
             put("(4^2)^(1/2)", "4");
             put("(16^3)^(1/3)", "16");
+            put("ln(e)", "1");
             put("log(10^10)", "10");
         }};
 
