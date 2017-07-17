@@ -1,5 +1,7 @@
 package se.wilhelmhedman.arithmetic.tree;
 
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
+
 import java.math.BigDecimal;
 
 public abstract class FunctionFactor extends Factor {
@@ -35,7 +37,16 @@ public abstract class FunctionFactor extends Factor {
 
         @Override
         protected double convertToDouble() {
-            return Math.toRadians(super.convertToDouble());
+            double d;
+
+            if (EvaluationContext.getActiveContext().isUseDegrees()) {
+                d = Math.toRadians(super.convertToDouble());
+            }
+            else {
+                d = super.convertToDouble();
+            }
+
+            return d;
         }
     }
 

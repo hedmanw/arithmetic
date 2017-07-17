@@ -17,6 +17,6 @@ public class Subtraction extends Expression {
 
     @Override
     public BigDecimal evaluate() {
-        return getLeft().evaluate().subtract(getRight().evaluate(), EvaluationContext.DEFAULT_CONTEXT);
+        return getLeft().evaluate().subtract(getRight().evaluate(), EvaluationContext.getActiveContext().getMathContext());
     }
 }

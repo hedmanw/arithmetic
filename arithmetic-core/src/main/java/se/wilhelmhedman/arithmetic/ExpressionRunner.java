@@ -15,8 +15,8 @@ import java.math.MathContext;
 import java.util.List;
 
 public class ExpressionRunner {
-    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000, EvaluationContext.DEFAULT_CONTEXT);
-    public static final BigDecimal ONE_MILLIONTH = BigDecimal.ONE.divide(ONE_MILLION, EvaluationContext.DEFAULT_CONTEXT);
+    public static final BigDecimal ONE_MILLION = new BigDecimal(1000000, EvaluationContext.getActiveContext().getMathContext());
+    public static final BigDecimal ONE_MILLIONTH = BigDecimal.ONE.divide(ONE_MILLION, EvaluationContext.getActiveContext().getMathContext());
     private final String input;
 
     public ExpressionRunner(String input) {
@@ -48,10 +48,11 @@ public class ExpressionRunner {
 
     public String evaluate() throws EvaluationException {
         Expression rootExp = getRoot();
-        BigDecimal result = rootExp.evaluate().setScale(EvaluationContext.DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
+        BigDecimal result = rootExp.evaluate().setScale(EvaluationContext.getActiveContext().getScale(), BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
 
         String resultString;
-        if (result.abs(EvaluationContext.DEFAULT_CONTEXT).compareTo(ONE_MILLION) >= 0 || result.abs(EvaluationContext.DEFAULT_CONTEXT).compareTo(ONE_MILLIONTH) <= 0) {
+        if (result.abs(EvaluationContext.getActiveContext().getMathContext()).compareTo(ONE_MILLION) >= 0 ||
+                result.abs(EvaluationContext.getActiveContext().getMathContext()).compareTo(ONE_MILLIONTH) <= 0) {
             resultString = result.toString();
         }
         else {

@@ -51,13 +51,13 @@ public class PowerFactor extends Factor {
             BigDecimal n2IntPart = factorEvaluated.subtract(remainderOf2);
             // Calculate big part of the power using context -
             // bigger range and performance but lower accuracy
-            BigDecimal intPow = thisEvaluated.pow(n2IntPart.intValueExact(), EvaluationContext.DEFAULT_CONTEXT);
+            BigDecimal intPow = thisEvaluated.pow(n2IntPart.intValueExact(), EvaluationContext.getActiveContext().getMathContext());
             BigDecimal doublePow = new BigDecimal(Math.pow(dn1, remainderOf2.doubleValue()));
             result = intPow.multiply(doublePow);
 
             // Fix negative power
             if (signOf2 == -1) {
-                result = BigDecimal.ONE.divide(result, EvaluationContext.DEFAULT_SCALE, RoundingMode.HALF_UP);
+                result = BigDecimal.ONE.divide(result, EvaluationContext.getActiveContext().getScale(), RoundingMode.HALF_UP);
             }
             return result;
         }

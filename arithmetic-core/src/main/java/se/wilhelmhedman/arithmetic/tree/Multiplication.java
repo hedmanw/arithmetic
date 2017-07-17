@@ -17,6 +17,6 @@ public class Multiplication extends Term {
 
     @Override
     public BigDecimal evaluate() {
-        return getLeft().evaluate().multiply(getRight().evaluate(), EvaluationContext.DEFAULT_CONTEXT);
+        return getLeft().evaluate().multiply(getRight().evaluate(), EvaluationContext.getActiveContext().getMathContext());
     }
 }

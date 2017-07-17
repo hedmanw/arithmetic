@@ -17,6 +17,6 @@ public class Addition extends Expression {
 
     @Override
     public BigDecimal evaluate() {
-        return getLeft().evaluate().add(getRight().evaluate(), EvaluationContext.DEFAULT_CONTEXT);
+        return getLeft().evaluate().add(getRight().evaluate(), EvaluationContext.getActiveContext().getMathContext());
     }
 }

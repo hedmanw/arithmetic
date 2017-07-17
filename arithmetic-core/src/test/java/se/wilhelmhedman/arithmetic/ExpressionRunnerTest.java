@@ -1,6 +1,7 @@
 package se.wilhelmhedman.arithmetic;
 
 import org.junit.Test;
+import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
@@ -123,11 +124,74 @@ public class ExpressionRunnerTest {
             put("log(10^10)", "10");
         }};
 
+        runExpected(input);
+    }
+
+    private void runExpected(Map<String, String> input) throws EvaluationException {
         for (String key: input.keySet()) {
             ExpressionRunner er = new ExpressionRunner(key);
             String actual = er.evaluate();
             assertEquals("Failure for " + key, input.get(key), actual);
         }
+    }
+
+    @Test
+    public void trigonometric() throws Exception {
+        ExpressionRunner er;
+
+        EvaluationContext degreesContext = new EvaluationContext.EvaluationContextBuilder().setUseDegrees(true).build();
+        EvaluationContext.setActiveContext(degreesContext);
+
+        er = new ExpressionRunner("sin(270)");
+        assertEquals("-1", er.evaluate());
+
+        er = new ExpressionRunner("sin(180)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("sin(90)");
+        assertEquals("1", er.evaluate());
+
+        er = new ExpressionRunner("sin(0)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(270)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(180)");
+        assertEquals("-1", er.evaluate());
+
+        er = new ExpressionRunner("cos(90)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(0)");
+        assertEquals("1", er.evaluate());
+
+        EvaluationContext radiansContext = new EvaluationContext.EvaluationContextBuilder().setUseDegrees(false).build();
+        EvaluationContext.setActiveContext(radiansContext);
+
+        er = new ExpressionRunner("sin(3*pi/2)");
+        assertEquals("-1", er.evaluate());
+
+        er = new ExpressionRunner("sin(pi)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("sin(pi/2)");
+        assertEquals("1", er.evaluate());
+
+        er = new ExpressionRunner("sin(0)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(3*pi/2)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(pi)");
+        assertEquals("-1", er.evaluate());
+
+        er = new ExpressionRunner("cos(pi/2)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("cos(0)");
+        assertEquals("1", er.evaluate());
     }
 
     @Test
