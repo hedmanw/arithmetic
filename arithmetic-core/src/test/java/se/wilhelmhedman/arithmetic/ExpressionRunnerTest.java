@@ -109,6 +109,9 @@ public class ExpressionRunnerTest {
 
         er = new ExpressionRunner("ln(e^2)");
         assertEquals("2", er.evaluate());
+
+        er = new ExpressionRunner("2*ans", "5");
+        assertEquals("10", er.evaluate());
     }
 
     @Test

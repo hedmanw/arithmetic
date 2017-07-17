@@ -1,17 +1,16 @@
 package se.wilhelmhedman.arithmetic;
 
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticErrorListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticLexer;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
+import se.wilhelmhedman.arithmetic.tree.ConstantAtom;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.List;
 
 public class ExpressionRunner {
@@ -20,7 +19,12 @@ public class ExpressionRunner {
     private final String input;
 
     public ExpressionRunner(String input) {
+        this(input, "0");
+    }
+
+    public ExpressionRunner(String input, String ansValue) {
         this.input = input;
+        ConstantAtom.AnswerConstant.setAns(ansValue);
     }
 
     protected Expression getRoot() throws EvaluationException {

@@ -125,6 +125,9 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
         else if (ctx.E() != null) {
             atom = ConstantAtom.E;
         }
+        else if (ctx.ANS() != null) {
+            atom = ConstantAtom.AnswerConstant.getInstance();
+        }
         atoms.put(ctx, atom);
     }
 

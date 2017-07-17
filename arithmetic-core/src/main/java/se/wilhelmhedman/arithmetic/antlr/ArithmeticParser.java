@@ -20,7 +20,7 @@ public class ArithmeticParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		LPAREN=1, RPAREN=2, PLUS=3, MINUS=4, TIMES=5, DIV=6, POINT=7, POW=8, SIN=9, 
-		COS=10, TAN=11, LN=12, LOG=13, PI=14, E=15, DIGIT=16, WS=17;
+		COS=10, TAN=11, LN=12, LOG=13, PI=14, E=15, ANS=16, DIGIT=17, WS=18;
 	public static final int
 		RULE_root = 0, RULE_expression = 1, RULE_term = 2, RULE_factor = 3, RULE_atom = 4, 
 		RULE_number = 5;
@@ -30,11 +30,11 @@ public class ArithmeticParser extends Parser {
 
 	private static final String[] _LITERAL_NAMES = {
 		null, "'('", "')'", "'+'", "'-'", "'*'", "'/'", "'.'", "'^'", "'sin'", 
-		"'cos'", "'tan'", "'ln'", "'log'", "'pi'", "'e'"
+		"'cos'", "'tan'", "'ln'", "'log'", "'pi'", "'e'", "'ans'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "LPAREN", "RPAREN", "PLUS", "MINUS", "TIMES", "DIV", "POINT", "POW", 
-		"SIN", "COS", "TAN", "LN", "LOG", "PI", "E", "DIGIT", "WS"
+		"SIN", "COS", "TAN", "LN", "LOG", "PI", "E", "ANS", "DIGIT", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -412,6 +412,7 @@ public class ArithmeticParser extends Parser {
 			case MINUS:
 			case PI:
 			case E:
+			case ANS:
 			case DIGIT:
 				_localctx = new PowerFactorContext(_localctx);
 				enterOuterAlt(_localctx, 1);
@@ -486,6 +487,7 @@ public class ArithmeticParser extends Parser {
 	public static class ConstantAtomContext extends AtomContext {
 		public TerminalNode PI() { return getToken(ArithmeticParser.PI, 0); }
 		public TerminalNode E() { return getToken(ArithmeticParser.E, 0); }
+		public TerminalNode ANS() { return getToken(ArithmeticParser.ANS, 0); }
 		public ConstantAtomContext(AtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -557,12 +559,13 @@ public class ArithmeticParser extends Parser {
 				break;
 			case PI:
 			case E:
+			case ANS:
 				_localctx = new ConstantAtomContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(53);
 				_la = _input.LA(1);
-				if ( !(_la==PI || _la==E) ) {
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << PI) | (1L << E) | (1L << ANS))) != 0)) ) {
 				_errHandler.recoverInline(this);
 				} else {
 					consume();
@@ -706,13 +709,13 @@ public class ArithmeticParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\23L\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\24L\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\7\3"+
 		"\27\n\3\f\3\16\3\32\13\3\3\4\3\4\3\4\3\4\3\4\3\4\7\4\"\n\4\f\4\16\4%\13"+
 		"\4\3\5\3\5\3\5\7\5*\n\5\f\5\16\5-\13\5\3\5\3\5\5\5\61\n\5\3\6\3\6\3\6"+
 		"\3\6\3\6\3\6\5\69\n\6\3\7\5\7<\n\7\3\7\6\7?\n\7\r\7\16\7@\3\7\3\7\7\7"+
 		"E\n\7\f\7\16\7H\13\7\5\7J\n\7\3\7\2\4\4\6\b\2\4\6\b\n\f\2\6\3\2\5\6\3"+
-		"\2\7\b\3\2\13\17\3\2\20\21O\2\16\3\2\2\2\4\20\3\2\2\2\6\33\3\2\2\2\b\60"+
+		"\2\7\b\3\2\13\17\3\2\20\22O\2\16\3\2\2\2\4\20\3\2\2\2\6\33\3\2\2\2\b\60"+
 		"\3\2\2\2\n8\3\2\2\2\f;\3\2\2\2\16\17\5\4\3\2\17\3\3\2\2\2\20\21\b\3\1"+
 		"\2\21\22\5\6\4\2\22\30\3\2\2\2\23\24\f\4\2\2\24\25\t\2\2\2\25\27\5\6\4"+
 		"\2\26\23\3\2\2\2\27\32\3\2\2\2\30\26\3\2\2\2\30\31\3\2\2\2\31\5\3\2\2"+
@@ -722,8 +725,8 @@ public class ArithmeticParser extends Parser {
 		"+)\3\2\2\2+,\3\2\2\2,\61\3\2\2\2-+\3\2\2\2./\t\4\2\2/\61\5\n\6\2\60&\3"+
 		"\2\2\2\60.\3\2\2\2\61\t\3\2\2\2\629\5\f\7\2\63\64\7\3\2\2\64\65\5\4\3"+
 		"\2\65\66\7\4\2\2\669\3\2\2\2\679\t\5\2\28\62\3\2\2\28\63\3\2\2\28\67\3"+
-		"\2\2\29\13\3\2\2\2:<\7\6\2\2;:\3\2\2\2;<\3\2\2\2<>\3\2\2\2=?\7\22\2\2"+
-		">=\3\2\2\2?@\3\2\2\2@>\3\2\2\2@A\3\2\2\2AI\3\2\2\2BF\7\t\2\2CE\7\22\2"+
+		"\2\2\29\13\3\2\2\2:<\7\6\2\2;:\3\2\2\2;<\3\2\2\2<>\3\2\2\2=?\7\23\2\2"+
+		">=\3\2\2\2?@\3\2\2\2@>\3\2\2\2@A\3\2\2\2AI\3\2\2\2BF\7\t\2\2CE\7\23\2"+
 		"\2DC\3\2\2\2EH\3\2\2\2FD\3\2\2\2FG\3\2\2\2GJ\3\2\2\2HF\3\2\2\2IB\3\2\2"+
 		"\2IJ\3\2\2\2J\r\3\2\2\2\13\30#+\608;@FI";
 	public static final ATN _ATN =
