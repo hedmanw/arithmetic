@@ -125,6 +125,9 @@ public class ExpressionRunnerTest {
             put("(16^3)^(1/3)", "16");
             put("ln(e)", "1");
             put("log(10^10)", "10");
+            put("asin(sin(90))", "90");
+            put("acos(cos(90))", "90");
+            put("atan(tan(45))", "45");
         }};
 
         runExpected(input);
@@ -175,6 +178,9 @@ public class ExpressionRunnerTest {
         er = new ExpressionRunner("cos(0)");
         assertEquals("1", er.evaluate());
 
+        er = new ExpressionRunner("tan(45)");
+        assertEquals("1", er.evaluate());
+
         EvaluationContext radiansContext = new EvaluationContext.EvaluationContextBuilder().setUseDegrees(false).build();
         EvaluationContext.setActiveContext(radiansContext);
 
@@ -211,21 +217,43 @@ public class ExpressionRunnerTest {
 
     @Test
     public void syntaxErrors() throws Exception {
-        assertThrown(new ExpressionRunner("50+"), 3);
-        assertThrown(new ExpressionRunner("+"), 0);
-        assertThrown(new ExpressionRunner("(-"), 2);
-        assertThrown(new ExpressionRunner("-"), 1);
-        assertThrown(new ExpressionRunner("-("), 1);
-        assertThrown(new ExpressionRunner("-^2"), 1);
-        assertThrown(new ExpressionRunner("sin"), 3);
+        assertSyntaxErrorsThrown(new ExpressionRunner("50+"), 3);
+        assertSyntaxErrorsThrown(new ExpressionRunner("+"), 0);
+        assertSyntaxErrorsThrown(new ExpressionRunner("(-"), 2);
+        assertSyntaxErrorsThrown(new ExpressionRunner("-"), 1);
+        assertSyntaxErrorsThrown(new ExpressionRunner("-("), 1);
+        assertSyntaxErrorsThrown(new ExpressionRunner("-^2"), 1);
+        assertSyntaxErrorsThrown(new ExpressionRunner("sin"), 3);
     }
 
-    private void assertThrown(ExpressionRunner er, int expected) {
+
+    @Test
+    public void mathErrors() throws Exception {
+        assertMathErrors("10/0");
+        assertMathErrors("tan(90)");
+        assertMathErrors("tan(270)");
+
+    }
+
+    private void assertSyntaxErrorsThrown(ExpressionRunner er, int expected) {
         try {
             er.evaluate();
             fail("Failure for " + er.getInput());
         } catch (EvaluationException e) {
             assertEquals(expected, e.getOffendingCharIndex());
+        }
+    }
+
+    private void assertMathErrors(String s) {
+        try {
+            ExpressionRunner er = new ExpressionRunner(s);
+            er.evaluate();
+            fail("Failure for " + er.getInput() + ", no exception was thrown.");
+        } catch (EvaluationException e) {
+            fail("Wrong exception! EvaluationException was thrown!");
+            e.printStackTrace();
+        } catch (ArithmeticException e) {
+            assertEquals(e.getClass(), ArithmeticException.class);
         }
     }
 }

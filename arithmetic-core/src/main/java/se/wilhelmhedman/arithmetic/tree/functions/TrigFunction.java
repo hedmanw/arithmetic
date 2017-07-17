@@ -52,6 +52,11 @@ public abstract class TrigFunction extends FunctionFactor {
 
         @Override
         protected double calculateFunctionValue(double value) {
+            double degValue = Math.toDegrees(value);
+            if (degValue % 180 == 90) {
+                throw new ArithmeticException("Undefined value for tan()");
+            }
+
             return Math.tan(value);
         }
     }

@@ -50,7 +50,7 @@ public class ExpressionRunner {
         return listener.getResult();
     }
 
-    public String evaluate() throws EvaluationException {
+    public String evaluate() throws EvaluationException, ArithmeticException {
         Expression rootExp = getRoot();
         BigDecimal result = rootExp.evaluate().setScale(EvaluationContext.getActiveContext().getScale(), BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
 
