@@ -6,7 +6,7 @@ import java.util.List;
 public class CalculationRepository {
     private static CalculationRepository instance = new CalculationRepository();
 
-    private List<IArithmeticQuery> history;
+    private LinkedList<IArithmeticQuery> history;
 
     private CalculationRepository() {
         history = new LinkedList<>();
@@ -18,5 +18,15 @@ public class CalculationRepository {
 
     public static List<IArithmeticQuery> getHistory() {
         return instance.history;
+    }
+
+    public static String getPreviousAnswer() {
+        if (instance.history.isEmpty()) {
+            return "0";
+        }
+        else {
+            IArithmeticQuery result = instance.history.getLast();
+            return result.getResult();
+        }
     }
 }

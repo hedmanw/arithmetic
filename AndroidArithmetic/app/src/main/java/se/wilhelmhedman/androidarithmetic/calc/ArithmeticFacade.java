@@ -8,7 +8,7 @@ public class ArithmeticFacade {
     public static IArithmeticQuery execute(String input) {
         ArithmeticSyntaxTransformer ast = new ArithmeticSyntaxTransformer();
         String preprocessed = ast.transformToArithmeticDSL(input);
-        ExpressionRunner runner = new ExpressionRunner(preprocessed);
+        ExpressionRunner runner = new ExpressionRunner(preprocessed, CalculationRepository.getPreviousAnswer());
 
         IArithmeticQuery response;
         try {
