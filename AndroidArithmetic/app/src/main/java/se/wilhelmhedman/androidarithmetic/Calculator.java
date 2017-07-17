@@ -41,11 +41,14 @@ public class Calculator extends AppCompatActivity {
             R.id.buttonRParen,
             R.id.buttonLParen,
             R.id.buttonSquare,
+            R.id.buttonAns,
     };
     private static final Map<Integer, String> SPECIAL_BUTTON_ACTIONS = new HashMap<Integer, String>() {{
         put(R.id.buttonSin, "sin(");
         put(R.id.buttonCos, "cos(");
         put(R.id.buttonTan, "tan(");
+        put(R.id.buttonLog, "log(");
+        put(R.id.buttonLn, "ln(");
     }};
 
     private CalculatorInputTextView typingTextView;

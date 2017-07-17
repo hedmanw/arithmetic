@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                style="@style/Buttons.Disabled"
+                style="@style/Buttons"
                 android:text="log" />
 
             <Button
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                style="@style/Buttons.Disabled"
+                style="@style/Buttons"
                 android:text="ln" />
         </LinearLayout>
 
@@ -319,14 +319,12 @@
 
             <!--ANS/PI-->
             <Button
-                android:id="@+id/buttonPi"
+                android:id="@+id/buttonAns"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:enabled="false"
-                style="@style/Buttons.Disabled"
-                android:text="ANS" />
+                style="@style/Buttons"
+                android:text="ans" />
 
             <Button
                 android:id="@+id/buttonUnaryMinus"
