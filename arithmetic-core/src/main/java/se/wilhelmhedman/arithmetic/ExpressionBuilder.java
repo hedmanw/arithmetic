@@ -4,6 +4,8 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticBaseListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticErrorListener;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.tree.*;
+import se.wilhelmhedman.arithmetic.tree.functions.InverseTrigonometricFunction;
+import se.wilhelmhedman.arithmetic.tree.functions.TrigFunction;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -87,19 +89,28 @@ public class ExpressionBuilder extends ArithmeticBaseListener {
         FunctionFactor atom = null;
         Atom functionArgument = atoms.get(ctx.atom());
         if (ctx.SIN() != null) {
-            atom = new FunctionFactor.SinFunction(functionArgument);
+            atom = new TrigFunction.SinFunction(functionArgument);
         }
         else if (ctx.COS() != null) {
-            atom = new FunctionFactor.CosFunction(functionArgument);
+            atom = new TrigFunction.CosFunction(functionArgument);
         }
         else if (ctx.TAN() != null){
-            atom = new FunctionFactor.TanFunction(functionArgument);
+            atom = new TrigFunction.TanFunction(functionArgument);
         }
         else if (ctx.LN() != null) {
             atom = new FunctionFactor.LnFunction(functionArgument);
         }
         else if (ctx.LOG() != null) {
             atom = new FunctionFactor.LogFunction(functionArgument);
+        }
+        else if (ctx.ASIN() != null) {
+            atom = new InverseTrigonometricFunction.ASinFunction(functionArgument);
+        }
+        else if (ctx.ACOS() != null) {
+            atom = new InverseTrigonometricFunction.ACosFunction(functionArgument);
+        }
+        else if (ctx.ATAN() != null) {
+            atom = new InverseTrigonometricFunction.ATanFunction(functionArgument);
         }
         factors.put(ctx, atom);
     }

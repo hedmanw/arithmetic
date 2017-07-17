@@ -157,6 +157,12 @@ public class ExpressionRunnerTest {
         er = new ExpressionRunner("sin(0)");
         assertEquals("0", er.evaluate());
 
+        er = new ExpressionRunner("asin(1)");
+        assertEquals("90", er.evaluate());
+
+        er = new ExpressionRunner("asin(0)");
+        assertEquals("0", er.evaluate());
+
         er = new ExpressionRunner("cos(270)");
         assertEquals("0", er.evaluate());
 
@@ -182,6 +188,12 @@ public class ExpressionRunnerTest {
         assertEquals("1", er.evaluate());
 
         er = new ExpressionRunner("sin(0)");
+        assertEquals("0", er.evaluate());
+
+        er = new ExpressionRunner("asin(1)");
+        assertEquals("1.5708", er.evaluate());
+
+        er = new ExpressionRunner("asin(0)");
         assertEquals("0", er.evaluate());
 
         er = new ExpressionRunner("cos(3*pi/2)");

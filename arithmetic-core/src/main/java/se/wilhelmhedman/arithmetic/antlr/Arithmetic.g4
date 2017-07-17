@@ -16,7 +16,7 @@ term:
     ;
 factor:
       atom (POW atom)* #powerFactor
-    | (SIN | COS | TAN | LN | LOG) atom #functionFactor
+    | (SIN | COS | TAN | ASIN | ACOS | ATAN | LN | LOG) atom #functionFactor
     ;
 atom:
       number #singleAtom
@@ -34,8 +34,11 @@ DIV: '/';
 POINT: '.';
 POW: '^';
 SIN: 'sin';
+ASIN: 'asin';
 COS: 'cos';
+ACOS: 'acos';
 TAN: 'tan';
+ATAN: 'atan';
 LN: 'ln';
 LOG: 'log';
 PI: 'pi';
