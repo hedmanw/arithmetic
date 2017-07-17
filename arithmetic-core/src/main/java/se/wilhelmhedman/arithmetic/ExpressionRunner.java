@@ -7,6 +7,7 @@ import se.wilhelmhedman.arithmetic.antlr.ArithmeticLexer;
 import se.wilhelmhedman.arithmetic.antlr.ArithmeticParser;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
+import se.wilhelmhedman.arithmetic.evaluation.NumericException;
 import se.wilhelmhedman.arithmetic.tree.ConstantAtom;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
@@ -50,9 +51,17 @@ public class ExpressionRunner {
         return listener.getResult();
     }
 
-    public String evaluate() throws EvaluationException, ArithmeticException {
+    public String evaluate() throws EvaluationException, NumericException {
         Expression rootExp = getRoot();
-        BigDecimal result = rootExp.evaluate().setScale(EvaluationContext.getActiveContext().getScale(), BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
+        BigDecimal evaluationResult;
+
+        try {
+            evaluationResult = rootExp.evaluate();
+        } catch (ArithmeticException e) {
+            throw new NumericException(e.getMessage());
+        }
+
+        BigDecimal result = evaluationResult.setScale(EvaluationContext.getActiveContext().getScale(), BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
 
         String resultString;
         if (result.abs(EvaluationContext.getActiveContext().getMathContext()).compareTo(ONE_MILLION) >= 0 ||

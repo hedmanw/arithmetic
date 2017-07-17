@@ -3,6 +3,7 @@ package se.wilhelmhedman.arithmetic;
 import org.junit.Test;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationContext;
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
+import se.wilhelmhedman.arithmetic.evaluation.NumericException;
 import se.wilhelmhedman.arithmetic.tree.Expression;
 
 import java.util.HashMap;
@@ -133,7 +134,7 @@ public class ExpressionRunnerTest {
         runExpected(input);
     }
 
-    private void runExpected(Map<String, String> input) throws EvaluationException {
+    private void runExpected(Map<String, String> input) throws EvaluationException, NumericException {
         for (String key: input.keySet()) {
             ExpressionRunner er = new ExpressionRunner(key);
             String actual = er.evaluate();
@@ -241,6 +242,8 @@ public class ExpressionRunnerTest {
             fail("Failure for " + er.getInput());
         } catch (EvaluationException e) {
             assertEquals(expected, e.getOffendingCharIndex());
+        } catch (NumericException e) {
+            fail("Threw NumericException.");
         }
     }
 
@@ -252,8 +255,8 @@ public class ExpressionRunnerTest {
         } catch (EvaluationException e) {
             fail("Wrong exception! EvaluationException was thrown!");
             e.printStackTrace();
-        } catch (ArithmeticException e) {
-            assertEquals(e.getClass(), ArithmeticException.class);
+        } catch (NumericException e) {
+            assertEquals(e.getClass(), NumericException.class);
         }
     }
 }

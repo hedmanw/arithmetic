@@ -1,6 +1,7 @@
 package se.wilhelmhedman.arithmetic;
 
 import se.wilhelmhedman.arithmetic.evaluation.EvaluationException;
+import se.wilhelmhedman.arithmetic.evaluation.NumericException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class EvalLoop {
                     }
                     sb.append('^');
                     System.out.println(sb.toString());
+                    result = e.getMessage();
+                } catch (NumericException e) {
                     result = e.getMessage();
                 }
                 System.out.println("< " + result);
