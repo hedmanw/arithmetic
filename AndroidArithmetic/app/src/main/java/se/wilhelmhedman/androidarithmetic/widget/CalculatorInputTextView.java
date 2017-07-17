@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import se.wilhelmhedman.androidarithmetic.R;
@@ -75,7 +74,7 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
             float x = event.getX();
             float y = event.getY();
             updateCaretIndex(x, y);
-            clearSyntaxError();
+            clearEvaluationError();
             invalidate();
         }
         return true;
@@ -159,13 +158,13 @@ public class CalculatorInputTextView extends android.support.v7.widget.AppCompat
         }
     }
 
-    protected void setSyntaxError(int index) {
+    protected void setEvaluationError(int index) {
         setCaretIndex(index);
         showError = true;
         invalidate();
     }
 
-    protected void clearSyntaxError() {
+    protected void clearEvaluationError() {
         showError = false;
         invalidate();
     }

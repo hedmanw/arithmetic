@@ -13,11 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import se.wilhelmhedman.androidarithmetic.calc.ArithmeticFacade;
+import se.wilhelmhedman.androidarithmetic.calc.ErrorResponse;
 import se.wilhelmhedman.androidarithmetic.calc.IArithmeticQuery;
-import se.wilhelmhedman.androidarithmetic.calc.SyntaxErrorResponse;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorHistoryView;
 import se.wilhelmhedman.androidarithmetic.widget.CalculatorInputTextView;
-import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorNotificationFacade;
+import se.wilhelmhedman.androidarithmetic.widget.EvaluationErrorNotificationFacade;
 import se.wilhelmhedman.androidarithmetic.widget.SyntaxErrorTextView;
 
 public class Calculator extends AppCompatActivity {
@@ -57,7 +57,7 @@ public class Calculator extends AppCompatActivity {
 
         typingTextView = (CalculatorInputTextView) findViewById(R.id.textViewTyping);
         final SyntaxErrorTextView errorContainer = (SyntaxErrorTextView) findViewById(R.id.containerError);
-        final SyntaxErrorNotificationFacade syntaxErrorNotificationFacade = new SyntaxErrorNotificationFacade(typingTextView, errorContainer);
+        final EvaluationErrorNotificationFacade errorNotificationFacade = new EvaluationErrorNotificationFacade(typingTextView, errorContainer);
         final CalculatorHistoryView calculatorHistoryView = (CalculatorHistoryView) findViewById(android.R.id.list);
 
         final View.OnClickListener literalButtonListener = new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class Calculator extends AppCompatActivity {
             public void onClick(View view) {
                 Button self = (Button) view;
                 typingTextView.addText(self.getText());
-                syntaxErrorNotificationFacade.clearSyntaxError();
+                errorNotificationFacade.clearEvaluationError();
             }
         };
 
@@ -77,7 +77,7 @@ public class Calculator extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 typingTextView.addText(SPECIAL_BUTTON_ACTIONS.get(view.getId()));
-                syntaxErrorNotificationFacade.clearSyntaxError();
+                errorNotificationFacade.clearEvaluationError();
             }
         };
 
@@ -93,7 +93,7 @@ public class Calculator extends AppCompatActivity {
                     calculatorHistoryView.removeAllViews();
                 }
                 typingTextView.clear();
-                syntaxErrorNotificationFacade.clearSyntaxError();
+                errorNotificationFacade.clearEvaluationError();
             }
         });
 
@@ -101,7 +101,7 @@ public class Calculator extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 typingTextView.delete();
-                syntaxErrorNotificationFacade.clearSyntaxError();
+                errorNotificationFacade.clearEvaluationError();
             }
         });
 
@@ -114,11 +114,11 @@ public class Calculator extends AppCompatActivity {
                     if (!response.hasErrors()) {
                         typingTextView.clear();
                         calculatorHistoryView.addHistoryEntry(response.toString());
-                        syntaxErrorNotificationFacade.clearSyntaxError();
+                        errorNotificationFacade.clearEvaluationError();
                     }
                     else {
-                        SyntaxErrorResponse errorResponse = (SyntaxErrorResponse) response;
-                        syntaxErrorNotificationFacade.setSyntaxError(errorResponse);
+                        ErrorResponse errorResponse = (ErrorResponse) response;
+                        errorNotificationFacade.setEvaluationError(errorResponse);
                     }
                 }
             }
