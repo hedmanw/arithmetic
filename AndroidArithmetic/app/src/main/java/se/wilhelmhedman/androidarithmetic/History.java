@@ -108,6 +108,7 @@ public class History extends AppCompatActivity {
             }
         });
 
+        viewContainer.setSelection(list.size()-1);
     }
 
     private void unselectCurrent() {
